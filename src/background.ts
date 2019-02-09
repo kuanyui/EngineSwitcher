@@ -63,15 +63,27 @@ function getCurrentState (currentUrl?: string): CurrentState | null {
     }
 }
 
-browser.pageAction.onClicked.addListener(function (tab) {
+
+function goToNextEngine (tab: browser.tabs.Tab) {
     const state = getCurrentState(tab.url)
-    if (!state) {return console.error('[To Developer] This should not happen.')}
+    if (!state) {return}
     browser.tabs.update(tab.id, {
         url: state.nextEngine.queryUrl.replace(/{}/, state.keyword)
     })
+}
+
+browser.pageAction.onClicked.addListener(function (tab) {
+    goToNextEngine(tab)
 })
 
 browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
-    console.log('收到', 'req',req, 'sender:', sender, 'cb', cb)
     browser.pageAction.show(sender.tab.id)
 })
+
+// browser.commands.onCommand.addListener(function(command) {
+//     if (command == "goToNextEngine") {
+//         browser.tabs.getCurrent().then((tab) => {
+//             goToNextEngine(tab)
+//         })
+//     }
+// });

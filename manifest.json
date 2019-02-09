@@ -31,5 +31,14 @@
             "js": ["dist/content.js"]
         }
     ],
-    "permissions": [ "tabs" ]
+    "permissions": [ "tabs" ],
+    "commands": {
+        "_execute_page_action": {
+            "suggested_key": {
+                "default": "Ctrl+Alt+N",
+                "linux": "Ctrl+Alt+N"
+            },
+            "description": "Switch to next search engine."
+        }
+    }
 }
