@@ -12,3 +12,4 @@ org-clock-save.el
 emacs-config.el
 node_modules/
 package-lock.json
+.directory

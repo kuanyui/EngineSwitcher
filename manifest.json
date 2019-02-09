@@ -8,11 +8,13 @@
         }
     },
     "description": "Switch search engine in one click",
+    "icons": {
+        "256": "img/icon.svg"
+    },
     "page_action": {
       "browser_style": true,
       "default_icon": {
-        "19": "img/ddg-19.png",
-        "38": "img/ddg-38.png"
+        "256": "img/icon.svg"
       },
       "default_title": "Switch Engine!"
     },
