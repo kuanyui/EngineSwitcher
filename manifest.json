@@ -14,16 +14,22 @@
         "19": "img/ddg-19.png",
         "38": "img/ddg-38.png"
       },
-      "default_title": "Switch Engine!",
-      "show_matches": [
-          "*://duckduckgo.com/*",
-          "*://www.startpage.com/*",
-          "*://www.bing.com/*",
-          "*://www.google.com/*"
-     ]
+      "default_title": "Switch Engine!"
     },
     "background": {
-        "scripts": ["dist/main.js"]
+        "scripts": ["dist/background.js"]
     },
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://duckduckgo.com/*",
+                "*://www.startpage.com/*",
+                "*://www.bing.com/*",
+                "*://www.google.com/*"
+            ],
+            "js": ["dist/content.js"]
+        }
+    ],
     "permissions": [ "tabs" ]
 }

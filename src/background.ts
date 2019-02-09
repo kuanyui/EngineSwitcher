@@ -3,7 +3,7 @@ interface SearchEngine {
     id: string,
     /** DuckDuckGo */
     name: string,
-    hostname: string,
+    hostname: string, 
     /** `q` in ?q= */
     queryKey: string,
     /** https://duckduckgo.com/?q={} */
@@ -71,3 +71,7 @@ browser.pageAction.onClicked.addListener(function (tab) {
     })
 })
 
+browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
+    console.log('收到', 'req',req, 'sender:', sender, 'cb', cb)
+    browser.pageAction.show(sender.tab.id)
+})
