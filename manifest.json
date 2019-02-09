@@ -33,7 +33,7 @@
             "js": ["dist/content.js"]
         }
     ],
-    "permissions": [ "tabs" ],
+    "permissions": [ "tabs", "storage" ],
     "commands": {
         "_execute_page_action": {
             "suggested_key": {

@@ -79,3 +79,12 @@ browser.pageAction.onClicked.addListener(function (tab) {
 browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
     browser.pageAction.show(sender.tab.id)
 })
+
+browser.storage.sync.get('enabledEngines').then((x) => {
+    console.log()
+    if (!x) {
+        browser.storage.sync.set({ 
+            enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ] 
+        })
+    }
+})

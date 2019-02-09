@@ -29,6 +29,12 @@ const ENGINES = [
         queryUrl: 'https://www.google.com/search?q={}',
     },
 ]
+function save () {
+    browser.storage.sync.set({ 
+        enabledEngines: this.enabledEngines 
+    })
+}
+
 new Vue({
     el: "#app",
     data: {
@@ -45,9 +51,13 @@ new Vue({
         addEngine () {
             this.enabledEngines.push(this.selectedEngine.id)
             this.selectedEngine = null
-        }
+            save()
+        },
     },
     mounted () {
-
-    }
+        browser.storage.sync.get().then((arr) => {
+            console.log('storage拿到...', arr)
+            this.enabledEngines = arr
+        })
+    },
 })
