@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EngineSwitcher - Options</title>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>EngineSwitcher</h1>
+        <h2>Enabled Search Engines</h2>
+        <select v-model="selectedEngine">
+            <option v-for="en in ENGINES" v-bind:value="en">{{ en.name }}</option>
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Move</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="en in enabledEngines">
+                    <td>{{ en.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="./vue.min.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>

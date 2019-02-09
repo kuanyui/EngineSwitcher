@@ -79,11 +79,3 @@ browser.pageAction.onClicked.addListener(function (tab) {
 browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
     browser.pageAction.show(sender.tab.id)
 })
-
-// browser.commands.onCommand.addListener(function(command) {
-//     if (command == "goToNextEngine") {
-//         browser.tabs.getCurrent().then((tab) => {
-//             goToNextEngine(tab)
-//         })
-//     }
-// });

@@ -42,5 +42,9 @@
             },
             "description": "Switch to next search engine."
         }
-    }
+    },
+    "options_ui": {
+        "page": "options_ui/index.html"
+    },
+    "content_security_policy": "default-src 'self' 'unsafe-eval'"
 }
