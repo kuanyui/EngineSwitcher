@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>EngineSwitcher - Options</title>
-    <script>
-    </script>
 </head>
 
 <body>
@@ -12,24 +10,36 @@
         <h1>EngineSwitcher</h1>
         <h2>Enabled Search Engines</h2>
         <select v-model="selectedEngine">
-            <option v-for="en in ENGINES" v-bind:value="en">{{ en.name }}</option>
+            <option v-for="en in disabledEngines" v-bind:value="en">{{ en.name }}</option>
         </select>
+        <button @click="addEngine" :disabled="!selectedEngine">+ Add</button>
         <table>
             <thead>
                 <tr>
+                    <th>Order</th>
                     <th>Name</th>
                     <th>Move</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="en in enabledEngines">
+                <tr v-for="(en, index) in enabledEngines">
+                    <td>{{ index + 1 }}</td>
                     <td>{{ en.name }}</td>
+                    <td>
+                        <span class="icon-button">▲</span>
+                        <span class="icon-button">▼</span>
+                    </td>
+                    <td>
+                        <span class="icon-button">⨉</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
     </div>
+    
     <script src="./vue.min.js"></script>
     <script src="./index.js"></script>
+    <link rel="stylesheet" href="./index.css">
 </body>
 </html>

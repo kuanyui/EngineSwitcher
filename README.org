@@ -18,11 +18,15 @@ web-ext run --verbose --firefox-profile ~/.mozilla/firefox/PROFILE_DIR_NAME
 #+BEGIN_SRC sh
 make xpi
 #+END_SRC
+
 * Permission
 - =tabs=: get =Tab.url= in =pageAction.onClicked=
 
 * 3rd-Party Libraries
 - [[https://github.com/vuejs/vue/blob/v2.6.4/dist/vue.runtime.min.js][Vue v2.6.4]]
+
+* Acknowedgement
+- Main icon is from Breeze of KDE Project
 
 * License
 WTFPL 2.0

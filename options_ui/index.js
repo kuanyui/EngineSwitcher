@@ -33,8 +33,21 @@ new Vue({
     el: "#app",
     data: {
         ENGINES: ENGINES,
-        enabledEngines: [],
-        selectedEngine: null,
+        enabledEngines: [], /** string[] */
+        selectedEngine: null, /** object */
     },
-    
+    computed: {
+        disabledEngines () {
+            return this.ENGINES.filter(x => !this.enabledEngines.includes(x.id))
+        }
+    },
+    methods: {
+        addEngine () {
+            this.enabledEngines.push(this.selectedEngine.id)
+            this.selectedEngine = null
+        }
+    },
+    mounted () {
+
+    }
 })
