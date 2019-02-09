@@ -4,16 +4,12 @@ var tsProject = ts.createProject("tsconfig.json");
 
 gulp.task("build", function () {
     return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest("dist"));
+    .pipe(tsProject())
+    .js.pipe(gulp.dest("dist"));
 });
 
 gulp.task('dev', function () {
-    gulp.watch('src/*.*', function () {
-        gulp.parallel('build')
-    });
+    gulp.watch('src/*.*', gulp.parallel('build'))
 });
 
-gulp.task("default", function () {
-    gulp.parallel('build')
-})
+gulp.task("default", gulp.parallel('build'))
