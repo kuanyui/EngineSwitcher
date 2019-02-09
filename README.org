@@ -1,0 +1,28 @@
+* EngineSwitcher
+[[https://github.com/kuanyui/EngineSwitcher][GitHub]]
+* Requirements for Development
+- Node
+- web-ext
+- GNU Make
+* Development
+** Prepare
+#+BEGIN_SRC sh
+npm i
+#+END_SRC
+** Run for development (Watch)
+#+BEGIN_SRC sh
+make dev
+web-ext run --verbose --firefox-profile ~/.mozilla/firefox/PROFILE_DIR_NAME
+#+END_SRC
+** Deploy (Build .xpi file)
+#+BEGIN_SRC sh
+make xpi
+#+END_SRC
+* Permission
+- =tabs=: get =Tab.url= in =pageAction.onClicked=
+
+* 3rd-Party Libraries
+- [[https://github.com/vuejs/vue/blob/v2.6.4/dist/vue.runtime.min.js][Vue v2.6.4]]
+
+* License
+WTFPL 2.0
