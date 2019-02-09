@@ -9,7 +9,7 @@
     },
     "description": "Switch search engine in one click",
     "icons": {
-        "256": "img/icon.svg"
+        "256": "img/icon.png"
     },
     "page_action": {
       "browser_style": true,
