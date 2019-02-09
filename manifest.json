@@ -1,24 +1,26 @@
 {
-
     "manifest_version": 2,
-    "name": "__MSG_manifestExtName__",
+    "name": "EngineSwitcher",
     "version": "0.1",
     "applications": {
-		"gecko": {
-			"id": "{44dc2f10-2812-48f1-bb39-e880679115b0}"
-		}
-	},
-    "description": "Switch search engine in one click",
-  
-    "icons": {
-      "48": "icons/border-48.png"
+        "gecko": {
+            "id": "{44dc2f10-2812-48f1-bb39-e880679115b0}"
+        }
     },
-    "default_locale": "en",
+    "description": "Switch search engine in one click",
+    "page_action": {
+      "browser_style": true,
+      "default_icon": {
+        "19": "img/ddg-19.png",
+        "38": "img/ddg-38.png"
+      },
+      "default_title": "Switch Engine!",
+      "show_matches": ["*://duckduckgo.com/*"]
+    },
     "content_scripts": [
-      {
-        "matches": ["*://*.duckduckgo.*/*"],
-        "js": ["dist/main.js"]
-      }
-    ]
-  
-  }
+        {
+            "matches": ["*://duckduckgo.com/*"],
+            "js": ["dist/main.js"]
+        }
+    ]   
+}
