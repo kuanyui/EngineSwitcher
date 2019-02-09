@@ -15,7 +15,12 @@
         "38": "img/ddg-38.png"
       },
       "default_title": "Switch Engine!",
-      "show_matches": ["*://duckduckgo.com/*"]
+      "show_matches": [
+          "*://duckduckgo.com/*",
+          "*://www.startpage.com/*",
+          "*://www.bing.com/*",
+          "*://www.google.com/*"
+     ]
     },
     "background": {
         "scripts": ["dist/main.js"]
