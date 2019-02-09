@@ -10,10 +10,10 @@ gulp.task("build", function () {
 
 gulp.task('dev', function () {
     gulp.watch('src/*.*', function () {
-        gulp.series('build')
+        gulp.parallel('build')
     });
 });
 
 gulp.task("default", function () {
-    gulp.series('build')
+    gulp.parallel('build')
 })

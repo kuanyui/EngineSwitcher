@@ -17,10 +17,8 @@
       "default_title": "Switch Engine!",
       "show_matches": ["*://duckduckgo.com/*"]
     },
-    "content_scripts": [
-        {
-            "matches": ["*://duckduckgo.com/*"],
-            "js": ["dist/main.js"]
-        }
-    ]   
+    "background": {
+        "scripts": ["dist/main.js"]
+    },
+    "permissions": [ "tabs" ]
 }
