@@ -1,5 +1,5 @@
 * EngineSwitcher
-A WebExtension to switch current page between various search engines in just one click, if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
+A WebExtension to switch current page between various search engines in just one click (or =Ctrl+Alt+N=), if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
 
 So you can easily keep your privacy as possible as you can.
 
@@ -58,6 +58,10 @@ For paranoid users such as me, these are all used permissions with its usages:
 
 * Acknowedgement
 - Main icon is from Breeze of KDE Project
+
+* TODOs
+- Customizable keyboard shortcuts.
+- More search engines.
 
 * License
 WTFPL 2.0
