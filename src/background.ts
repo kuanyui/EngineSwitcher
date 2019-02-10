@@ -16,6 +16,10 @@ interface CurrentState {
     nextEngine: SearchEngine,
 }
 
+interface MyStorage {
+    enabledEngines: string[],
+}
+
 const ENGINES: SearchEngine[] = [
     {
         id: 'duckduckgo',
@@ -46,6 +50,10 @@ const ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.google.com/search?q={}',
     },
 ]
+
+const STORAGE: MyStorage = {
+    enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ]   // Shit WebExtention
+}
 
 function getCurrentState (currentUrl?: string): CurrentState | null {
     if (!currentUrl) {return null}
@@ -80,11 +88,24 @@ browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
     browser.pageAction.show(sender.tab.id)
 })
 
-browser.storage.sync.get('enabledEngines').then((x) => {
-    console.log()
-    if (!x) {
-        browser.storage.sync.set({ 
-            enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ] 
+
+// Storage
+console.log('bg first time to get config from storage')
+browser.storage.sync.get().then((obj) => {
+    console.log('bg gotten!', obj)
+    if (obj.enabledEngines === undefined) {
+        // init data
+        browser.storage.sync.set({
+            ...STORAGE
         })
+    } else {
+        STORAGE.enabledEngines = obj.enabledEngines as string[]
+    }
+    // STORAGE = obj
+}).catch(err => {console.error(err)})
+
+browser.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'sync') {
+        console.log('bg changed!', changes)
     }
 })

@@ -1,4 +1,5 @@
-// Copy & paste from background.js to here because I haven't found an easy way to use import statements in fucking JavaScript and its shit runtime
+// Copy & paste from background.js to here because I haven't found an easy way to use import statements in fucking JavaScript with TypeScript and its shit runtime
+// Shit Extension
 const ENGINES = [
     {
         id: 'duckduckgo',
@@ -29,35 +30,59 @@ const ENGINES = [
         queryUrl: 'https://www.google.com/search?q={}',
     },
 ]
-function save () {
-    browser.storage.sync.set({ 
-        enabledEngines: this.enabledEngines 
-    })
-}
+
 
 new Vue({
     el: "#app",
     data: {
         ENGINES: ENGINES,
-        enabledEngines: [], /** string[] */
+        idOfEnabledEngines: [], /** string[] */
         selectedEngine: null, /** object */
     },
     computed: {
+        enabledEngines () {
+            return this.idOfEnabledEngines.map(id => ENGINES.find(en => en.id === id))
+        },
         disabledEngines () {
-            return this.ENGINES.filter(x => !this.enabledEngines.includes(x.id))
+            return this.ENGINES.filter(x => !this.idOfEnabledEngines.includes(x.id))
         }
     },
     methods: {
-        addEngine () {
-            this.enabledEngines.push(this.selectedEngine.id)
-            this.selectedEngine = null
-            save()
+        save () {
+            browser.storage.sync.set({ 
+                enabledEngines: this.idOfEnabledEngines
+            })
         },
+        addEngine () {
+            this.idOfEnabledEngines.push(this.selectedEngine.id)
+            this.selectedEngine = null
+            this.save()
+        },
+        delEngine (index) {
+            if (this.idOfEnabledEngines.length === 1) {return}
+            this.idOfEnabledEngines.splice(index, 1)
+            this.save()
+        },
+        moveUp (index) {
+            if (index === 0) {return}
+            const a0 = this.idOfEnabledEngines[index - 1]
+            const a1 = this.idOfEnabledEngines[index]
+            this.idOfEnabledEngines.splice(index - 1, 2, a1, a0)
+            this.save()
+        },
+        moveDn (index) {
+            if (index === this.idOfEnabledEngines.length - 1) {return}
+            const a0 = this.idOfEnabledEngines[index]
+            const a1 = this.idOfEnabledEngines[index + 1]
+            this.idOfEnabledEngines.splice(index, 2, a1, a0) 
+            this.save()
+        }
     },
     mounted () {
-        browser.storage.sync.get().then((arr) => {
-            console.log('storage拿到...', arr)
-            this.enabledEngines = arr
+        browser.storage.sync.get().then((obj) => {
+            this.idOfEnabledEngines = obj.enabledEngines // || [ "duckduckgo", "startpage", "bing", "google" ]   // Shit WebExtension
+        }).catch((err) => {
+            console.error('[Error]', err)
         })
     },
 })

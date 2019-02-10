@@ -23,15 +23,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(en, index) in enabledEngines">
+                <tr v-for="(en, index) in enabledEngines" :key="en">
                     <td>{{ index + 1 }}</td>
                     <td>{{ en.name }}</td>
                     <td>
-                        <span class="icon-button">▲</span>
-                        <span class="icon-button">▼</span>
+                        <span class="icon-button" @click="moveUp(index)">▲</span>
+                        <span class="icon-button" @click="moveDn(index)">▼</span>
                     </td>
                     <td>
-                        <span class="icon-button">⨉</span>
+                        <span class="icon-button" @click="delEngine(index)">⨉</span>
                     </td>
                 </tr>
             </tbody>
