@@ -58,7 +58,7 @@ For paranoid users such as me, these are all used permissions with its usages:
     [[https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Differences_between_desktop_and_Android#Effect_on_your_add-on_UI][Firefox for Android requires developer call =browser.pageAction.show()= explicitly]] and it's impossible to use =pageAction= with only =manifest.page_action.show_matches= to implement this extension.
   #+END_QUOTE
 
--  ="content_security_policy": "default-src 'self' 'unsafe-eval'"=: =unsafe-eval= is required by =vue.min.js=
+-  ="content_security_policy": "default-src 'self' 'unsafe-eval'"= : =unsafe-eval= is required by =vue.min.js=
 * 3rd-Party Libraries
 - [[https://github.com/vuejs/vue/blob/v2.6.4/dist/vue.min.js][Vue v2.6.4]]
 
