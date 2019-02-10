@@ -9,7 +9,8 @@ Currently supported search engines:
 - Bing
 - Google
 
-- [[https://github.com/kuanyui/EngineSwitcher][GitHub]]
+For more information please see [[https://github.com/kuanyui/EngineSwitcher][GitHub]].
+
 * Screenshot
 [[https://addons.cdn.mozilla.net/user-media/previews/full/214/214819.png]]
 
