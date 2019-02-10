@@ -1,5 +1,5 @@
 * EngineSwitcher
-A WebExtension to switch search engine in just one click, if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
+A WebExtension to switch current page between various search engines in just one click, if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
 
 So you can easily keep your privacy as possible as you can.
 
@@ -14,6 +14,7 @@ Currently supported search engines:
 * Supported Browser
 - Firefox for Desktop >= 61
 - Firefox for Android >= 61
+
 
 * Requirements for Development
 - Node
@@ -51,8 +52,9 @@ For paranoid users such as me, these are all used permissions with its usages:
     [[https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Differences_between_desktop_and_Android#Effect_on_your_add-on_UI][Firefox for Android requires developer call =browser.pageAction.show()= explicitly]] and it's impossible to use =pageAction= with only =manifest.page_action.show_matches= to implement this extension.
   #+END_QUOTE
 
+-  ="content_security_policy": "default-src 'self' 'unsafe-eval'"=: =unsafe-eval= is required by =vue.min.js=
 * 3rd-Party Libraries
-- [[https://github.com/vuejs/vue/blob/v2.6.4/dist/vue.runtime.min.js][Vue v2.6.4]]
+- [[https://github.com/vuejs/vue/blob/v2.6.4/dist/vue.min.js][Vue v2.6.4]]
 
 * Acknowedgement
 - Main icon is from Breeze of KDE Project
