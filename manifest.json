@@ -14,7 +14,7 @@
     "page_action": {
       "browser_style": true,
       "default_icon": {
-        "256": "img/icon.svg"
+        "256": "img/icon.png"
       },
       "default_title": "Switch Engine!"
     },

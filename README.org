@@ -1,9 +1,26 @@
 * EngineSwitcher
+A WebExtension to switch search engine in just one click, if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
+
+So you can easily keep your privacy as possible as you can.
+
+Currently supported search engines:
+- DuckDuckGo
+- StartPage
+- Bing
+- Google
+
 [[https://github.com/kuanyui/EngineSwitcher][GitHub]]
+
+* Supported Browser
+- Firefox for Desktop >= 61
+- Firefox for Android >= 61
+
 * Requirements for Development
 - Node
 - web-ext
 - GNU Make
+- Python 3 (For HTTP server)
+
 * Development
 ** Prepare
 #+BEGIN_SRC sh
@@ -14,13 +31,25 @@ npm i
 make dev
 web-ext run --verbose --firefox-profile ~/.mozilla/firefox/PROFILE_DIR_NAME
 #+END_SRC
-** Deploy (Build .xpi file)
+** Deploy (Build .xpi file & run a HTTP server for download)
 #+BEGIN_SRC sh
-make xpi
+make xpi-server
 #+END_SRC
 
 * Permission
-- =tabs=: get =Tab.url= in =pageAction.onClicked=
+For paranoid users such as me, these are all used permissions with its usages:
+- =tabs=:
+  - Get the URL of current page (=Tab.url= in =pageAction.onClicked=)
+  - Redirect to new URL (=tabs.update({url: string})=)
+
+- =storage=:
+  - For saving user preferences in your Mozilla account (=storage.sync=)
+
+- =duckduckgo.com=, =startpage.com=, =bing.com=, ... etc
+  - For inserting =content.js= in these pages.
+  #+BEGIN_QUOTE 
+    [[https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Differences_between_desktop_and_Android#Effect_on_your_add-on_UI][Firefox for Android requires developer call =browser.pageAction.show()= explicitly]] and it's impossible to use =pageAction= with only =manifest.page_action.show_matches= to implement this extension.
+  #+END_QUOTE
 
 * 3rd-Party Libraries
 - [[https://github.com/vuejs/vue/blob/v2.6.4/dist/vue.runtime.min.js][Vue v2.6.4]]
