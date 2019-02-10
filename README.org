@@ -9,7 +9,12 @@ Currently supported search engines:
 - Bing
 - Google
 
-[[https://github.com/kuanyui/EngineSwitcher][GitHub]]
+- [[https://github.com/kuanyui/EngineSwitcher][GitHub]]
+* Screenshot
+[[https://addons.cdn.mozilla.net/user-media/previews/full/214/214819.png]]
+
+* Install
+- [[https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/][Mozilla Add-ons]]
 
 * Supported Browser
 - Firefox for Desktop >= 61
