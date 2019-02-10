@@ -55,15 +55,24 @@ const STORAGE: MyStorage = {
     enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ]   // Shit WebExtention
 }
 
+function getEnabledEngines (): SearchEngine[] {
+    return ENGINES.filter(en => STORAGE.enabledEngines.includes(en.id))
+}
+
 function getCurrentState (currentUrl?: string): CurrentState | null {
     if (!currentUrl) {return null}
+    const engines = getEnabledEngines()
     const urlObj = new URL(currentUrl + '')
-    const curIdx = ENGINES.findIndex(x => x.hostname === urlObj.hostname)
-    if (curIdx === -1) { return null }
-    const curEng = ENGINES[curIdx]
+    const isSupportedEngine = ENGINES.some(e => e.hostname === urlObj.hostname)
+    if (!isSupportedEngine) {return null}
+    let curIdx = engines.findIndex(x => x.hostname === urlObj.hostname)
+    if (curIdx === -1) { 
+        curIdx = 0
+     }
+    const curEng = engines[curIdx]
     const params = new URLSearchParams(urlObj.search)
     const keyword = params.get(curEng.queryKey) || ''
-    const nextEng = ENGINES[(curIdx + 1) % ENGINES.length]
+    const nextEng = engines[(curIdx + 1) % engines.length]
     return {
         keyword: keyword,
         currentEngine: curEng,
@@ -90,9 +99,9 @@ browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
 
 
 // Storage
-console.log('bg first time to get config from storage')
+console.log('[background] first time to get config from storage')
 browser.storage.sync.get().then((obj) => {
-    console.log('bg gotten!', obj)
+    console.log('[background] storage gotten!', obj)
     if (obj.enabledEngines === undefined) {
         // init data
         browser.storage.sync.set({
@@ -106,6 +115,7 @@ browser.storage.sync.get().then((obj) => {
 
 browser.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'sync') {
-        console.log('bg changed!', changes)
+        console.log('[background] storage changed!', changes)
+        STORAGE.enabledEngines = changes.enabledEngines.newValue
     }
 })

@@ -6,7 +6,7 @@
     "compilerOptions": {
       // You have to explicitly set @types to get DefinitelyTyped type definitions
       "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
-      "target": "es2015",
+      "target": "es2017",
       "strict": true,
     }
   }
