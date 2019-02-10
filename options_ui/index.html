@@ -14,37 +14,38 @@
             </a>
         </nav>
         <div class="container">
-
-            <h4>Enabled Search Engines</h4>
-            <div class="row">
-                <select class="form-control col-sm-9" v-model="selectedEngine" :disabled="disabledEngines.length === 0">
-                    <option v-for="en in disabledEngines" v-bind:value="en">{{ en.name }}</option>
-                </select>
-                <button class="btn btn-primary col-sm-3" @click="addEngine" :disabled="!selectedEngine">+ Add</button>
-            </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order</th>
-                        <th>Name</th>
-                        <th>Move</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(en, index) in enabledEngines" :key="en">
-                        <td>{{ index + 1 }}</td>
-                        <td>{{ en.name }}</td>
-                        <td>
-                            <span class="icon-button" @click="moveUp(index)">▲</span>
-                            <span class="icon-button" @click="moveDn(index)">▼</span>
-                        </td>
-                        <td>
-                            <span class="icon-button" @click="delEngine(index)">⨉</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <p>
+                <h5>Enabled Search Engines</h5>
+                <div class="row">
+                    <select class="form-control col-sm-9" v-model="selectedEngine" :disabled="disabledEngines.length === 0">
+                        <option v-for="en in disabledEngines" v-bind:value="en">{{ en.name }}</option>
+                    </select>
+                    <button class="btn btn-primary col-sm-3" @click="addEngine" :disabled="!selectedEngine">+ Add</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Name</th>
+                            <th>Move</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(en, index) in enabledEngines" :key="en">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ en.name }}</td>
+                            <td>
+                                <span class="icon-button" @click="moveUp(index)">▲</span>
+                                <span class="icon-button" @click="moveDn(index)">▼</span>
+                            </td>
+                            <td>
+                                <span class="icon-button" @click="delEngine(index)">⨉</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
         </div>
     </div>
     
