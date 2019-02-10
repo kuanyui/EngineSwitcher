@@ -6,40 +6,51 @@
 </head>
 
 <body>
-    <div id="app">
-        <h1>EngineSwitcher</h1>
-        <h2>Enabled Search Engines</h2>
-        <select v-model="selectedEngine">
-            <option v-for="en in disabledEngines" v-bind:value="en">{{ en.name }}</option>
-        </select>
-        <button @click="addEngine" :disabled="!selectedEngine">+ Add</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Order</th>
-                    <th>Name</th>
-                    <th>Move</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(en, index) in enabledEngines" :key="en">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ en.name }}</td>
-                    <td>
-                        <span class="icon-button" @click="moveUp(index)">▲</span>
-                        <span class="icon-button" @click="moveDn(index)">▼</span>
-                    </td>
-                    <td>
-                        <span class="icon-button" @click="delEngine(index)">⨉</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="container" id="app">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/" target="_blank">
+                <img src="../img/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+                Engine Switcher
+            </a>
+        </nav>
+        <div class="container">
+
+            <h4>Enabled Search Engines</h4>
+            <div class="row">
+                <select class="form-control col-sm-9" v-model="selectedEngine" :disabled="disabledEngines.length === 0">
+                    <option v-for="en in disabledEngines" v-bind:value="en">{{ en.name }}</option>
+                </select>
+                <button class="btn btn-primary col-sm-3" @click="addEngine" :disabled="!selectedEngine">+ Add</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Name</th>
+                        <th>Move</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(en, index) in enabledEngines" :key="en">
+                        <td>{{ index + 1 }}</td>
+                        <td>{{ en.name }}</td>
+                        <td>
+                            <span class="icon-button" @click="moveUp(index)">▲</span>
+                            <span class="icon-button" @click="moveDn(index)">▼</span>
+                        </td>
+                        <td>
+                            <span class="icon-button" @click="delEngine(index)">⨉</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     
     <script src="./vue.min.js"></script>
     <script src="./index.js"></script>
+    <link rel="stylesheet" href="./bootstrap.min.css">
     <link rel="stylesheet" href="./index.css">
 </body>
 </html>
