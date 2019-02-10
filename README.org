@@ -1,4 +1,4 @@
-* EngineSwitcher
+* Privacy Search Engine Switcher
 A WebExtension to switch current page between various search engines in just one click (or =Ctrl+Alt+N=), if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
 
 So you can easily keep your privacy as possible as you can.
@@ -68,6 +68,6 @@ For paranoid users such as me, these are all used permissions with its usages:
 * TODOs
 - Customizable keyboard shortcuts.
 - More search engines.
-
+- Fix the bug when StartPage has no query in URL.
 * License
 WTFPL 2.0
