@@ -25,10 +25,7 @@
         {
             "run_at": "document_start",
             "matches": [
-                "*://duckduckgo.com/*",
                 "*://www.startpage.com/*",
-                "*://www.bing.com/*",
-                "*://www.google.com/*"
             ],
             "js": ["dist/content.js"]
         }

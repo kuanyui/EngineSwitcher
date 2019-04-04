@@ -1,4 +1,4 @@
-import { MyStorage, SearchEngine, CurrentState, ENGINES, isCurrentUrlSupported } from "./common";
+import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported } from "./common";
 
 
 const STORAGE: MyStorage = {
@@ -13,7 +13,7 @@ function getEnabledEngines (): SearchEngine[] {
 function getCurrentState (currentUrl?: string): CurrentState | null {
     if (!currentUrl) {return null}
     const engines = getEnabledEngines()
-    if (!isCurrentUrlSupported(currentUrl)) { return null }
+    if (!isUrlSupported(currentUrl)) { return null }
     const urlObj = new URL(currentUrl + '')
     let curIdx = engines.findIndex(x => x.hostname === urlObj.hostname)
     if (curIdx === -1) { 
@@ -51,6 +51,16 @@ browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
     }
 })
 
+browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
+    if (changeInfo.url) {
+        console.log(tabId, changeInfo)
+        if (isUrlSupported(changeInfo.url)) {
+            browser.pageAction.show(tabId)
+        } else {
+            browser.pageAction.hide(tabId)
+        }
+    }
+});
 
 // Storage
 console.log('[background] first time to get config from storage')
