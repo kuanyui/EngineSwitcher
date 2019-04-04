@@ -1,7 +1,7 @@
 {
-  "files": [
-    "src/content.ts",
-    "src/background.ts",
+  "includes": [
+    "src/*",
+    "src/**/*",
   ],
     "compilerOptions": {
       // You have to explicitly set @types to get DefinitelyTyped type definitions

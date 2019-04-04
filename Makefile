@@ -5,10 +5,10 @@ BIN:="node_modules/.bin"
 XPI_DIR=../xpi
 
 dev:
-	${BIN}/gulp dev
+	npm run dev
 
 build:
-	${BIN}/gulp build
+	npm run build
 
 xpi: build
 	mkdir -p ${XPI_DIR}

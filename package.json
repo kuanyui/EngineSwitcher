@@ -3,16 +3,18 @@
   "version": "0.0.1",
   "description": "Switch search engine in one click",
   "main": "dist/index.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "gulp": "^4.0.0",
-    "gulp-typescript": "^5.0.0",
+    "ts-loader": "^5.3.3",
     "typescript": "^3.3.3",
-    "web-ext-types": "^3.1.0"
+    "web-ext-types": "^3.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode=development --watch",
+    "build": "webpack --mode=production"
   },
   "keywords": [
     "webextension"
