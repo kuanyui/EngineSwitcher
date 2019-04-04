@@ -80,7 +80,7 @@ new Vue({
     },
     mounted () {
         browser.storage.sync.get().then((obj) => {
-            this.idOfEnabledEngines = obj.enabledEngines // || [ "duckduckgo", "startpage", "bing", "google" ]   // Shit WebExtension
+            this.idOfEnabledEngines = obj.enabledEngines // || [ "duckduckgo", "startpage", "bing", "google" ]
         }).catch((err) => {
             console.error('[Error]', err)
         })

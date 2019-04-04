@@ -69,6 +69,5 @@ For paranoid users such as me, these are all used permissions with its usages:
 * TODOs
 - Customizable keyboard shortcuts.
 - More search engines.
-- Fix the bug when StartPage has no query in URL.
 * License
 WTFPL 2.0
