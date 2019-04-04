@@ -25,7 +25,7 @@
         {
             "run_at": "document_start",
             "matches": [
-                "*://www.startpage.com/*",
+                "*://*.startpage.com/*"
             ],
             "js": ["dist/content.js"]
         }

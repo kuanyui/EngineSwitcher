@@ -1,13 +1,21 @@
+export type search_engine_t = 'duckduckgo' | 'startpage' | 'bing' | 'google'
 export interface SearchEngine {
     /** duckduckgo */
-    id: string,
+    id: search_engine_t,
     /** DuckDuckGo */
     name: string,
+    /** 
+     * This should be a finger print which is able to cover all conditions. 
+     * e.g. Sometimes, the hostname of StartPage will become to s7-us4.startpage.com
+     * so its hostname should be startpage.com instead of www.startpage.com
+     */
     hostname: string, 
     /** `q` in ?q= */
     queryKey: string,
     /** https://duckduckgo.com/?q={} */
     queryUrl: string,
+    /** Need to get query string via content.js */
+    queryNeedContentScript: boolean,
 }
 
 export interface CurrentState {
@@ -27,13 +35,15 @@ export const ENGINES: SearchEngine[] = [
         hostname: 'duckduckgo.com',
         queryKey: 'q',
         queryUrl: 'https://duckduckgo.com/?q={}',
+        queryNeedContentScript: false,
     },
     { 
         id: 'startpage',
         name: 'StartPage',
-        hostname: 'www.startpage.com',
+        hostname: 'startpage.com',
         queryKey: 'query',
         queryUrl: 'https://www.startpage.com/do/dsearch/?query={}',
+        queryNeedContentScript: true,
     },
     { 
         id: 'bing',
@@ -41,6 +51,7 @@ export const ENGINES: SearchEngine[] = [
         hostname: 'www.bing.com',
         queryKey: 'q',
         queryUrl: 'https://www.bing.com/search?q={}',
+        queryNeedContentScript: false,
     },
     { 
         id: 'google',
@@ -48,10 +59,24 @@ export const ENGINES: SearchEngine[] = [
         hostname: 'www.google.com',
         queryKey: 'q',
         queryUrl: 'https://www.google.com/search?q={}',
+        queryNeedContentScript: false,
     },
 ]
 
+export interface TypedMsg {
+    type: 'askQueryString' | 'ansQueryString'
+}
+
+export interface TypedMsg_R_String {
+    d: string
+}
+
 export function isUrlSupported (currentUrl: string): boolean {
     const urlObj = new URL(currentUrl + '')
-    return ENGINES.some(e => e.hostname === urlObj.hostname)
+    return ENGINES.some(eng => urlObj.hostname.includes(eng.hostname))
+}
+
+export function getEngineObjOfUrl (currentUrl: string): SearchEngine | undefined {
+    const urlObj = new URL(currentUrl + '')
+    return ENGINES.find(eng => urlObj.hostname.includes(eng.hostname))
 }
