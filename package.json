@@ -3,10 +3,18 @@
   "version": "0.0.1",
   "description": "Switch search engine in one click",
   "main": "dist/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "vue": "^2.6.10"
+  },
   "devDependencies": {
+    "css-loader": "^2.1.1",
+    "pug-plain-loader": "^1.0.0",
+    "stylus-loader": "^3.0.2",
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.3",
+    "vue-loader": "^15.7.0",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.10",
     "web-ext-types": "^3.1.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"

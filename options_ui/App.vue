@@ -1,49 +1,27 @@
-// Copy & paste from background.js to here because I haven't found an easy way to use import statements in fucking JavaScript with TypeScript and its shit runtime
-// Shit Extension
-const ENGINES = [
-    {
-        id: 'duckduckgo',
-        name: 'DuckDuckGo',
-        hostname: 'duckduckgo.com',
-        queryKey: 'q',
-        queryUrl: 'https://duckduckgo.com/?q={}',
-    },
-    { 
-        id: 'startpage',
-        name: 'StartPage',
-        hostname: 'www.startpage.com',
-        queryKey: 'query',
-        queryUrl: 'https://www.startpage.com/do/dsearch/?query={}',
-    },
-    { 
-        id: 'bing',
-        name: 'Bing',
-        hostname: 'www.bing.com',
-        queryKey: 'q',
-        queryUrl: 'https://www.bing.com/search?q={}',
-    },
-    { 
-        id: 'google',
-        name: 'Google',
-        hostname: 'www.google.com',
-        queryKey: 'q',
-        queryUrl: 'https://www.google.com/search?q={}',
-    },
-]
+<template lang="pug">
+    
+</template>
 
-
-new Vue({
-    el: "#app",
-    data: {
-        ENGINES: ENGINES,
-        idOfEnabledEngines: [], /** string[] */
-        selectedEngine: null, /** object */
+<script lang="ts">
+import Vue from 'vue'
+import { ENGINES, SearchEngine } from '../src/common';
+export default Vue.extend({
+    data (): {
+        ENGINES: typeof ENGINES,
+        idOfEnabledEngines: string[],
+        selectedEngine: null | SearchEngine
+    } {
+        return {
+            ENGINES: ENGINES,
+            idOfEnabledEngines: [], 
+            selectedEngine: null,
+        }
     },
     computed: {
         enabledEngines () {
             return this.idOfEnabledEngines.map(id => ENGINES.find(en => en.id === id))
         },
-        disabledEngines () {
+        disabledEngines (): SearchEngine[] {
             return this.ENGINES.filter(x => !this.idOfEnabledEngines.includes(x.id))
         }
     },
@@ -54,23 +32,24 @@ new Vue({
             })
         },
         addEngine () {
+            if (!this.selectedEngine) {return}
             this.idOfEnabledEngines.push(this.selectedEngine.id)
             this.selectedEngine = null
             this.save()
         },
-        delEngine (index) {
+        delEngine (index: number) {
             if (this.idOfEnabledEngines.length === 1) {return}
             this.idOfEnabledEngines.splice(index, 1)
             this.save()
         },
-        moveUp (index) {
+        moveUp (index: number) {
             if (index === 0) {return}
             const a0 = this.idOfEnabledEngines[index - 1]
             const a1 = this.idOfEnabledEngines[index]
             this.idOfEnabledEngines.splice(index - 1, 2, a1, a0)
             this.save()
         },
-        moveDn (index) {
+        moveDn (index: number) {
             if (index === this.idOfEnabledEngines.length - 1) {return}
             const a0 = this.idOfEnabledEngines[index]
             const a1 = this.idOfEnabledEngines[index + 1]
@@ -86,3 +65,29 @@ new Vue({
         })
     },
 })
+</script>
+
+<style lang="stylus">
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    width: 33%;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    padding: 2px 12px;
+    vertical-align: middle;
+}
+
+tr:hover td {
+    background-color: #eee;
+}
+
+.icon-button {
+    cursor: pointer;
+    font-size: 24px;
+}
+</style>
