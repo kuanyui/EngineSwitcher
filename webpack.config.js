@@ -3,7 +3,8 @@ const { VueLoaderPlugin } = require('vue-loader')
 const config = {
     entry: {
         background: './src/background.ts',
-        content: './src/content.ts',      
+        content: './src/content.ts',     
+        options_ui: './options_ui/index.ts' 
     },
     output: {
         filename: '[name].js',
@@ -11,7 +12,10 @@ const config = {
     },
     module: {
         rules: [
-            { test: /\.tsx?$/, use: 'ts-loader', options: { appendTsSuffixTo: [/\.vue$/] } },
+            { test: /\.tsx?$/, use: { 
+                loader: 'ts-loader',
+                options: { appendTsSuffixTo: [/\.vue$/] } } 
+            },
             { test: /\.vue$/, use: 'vue-loader' },
             { test: /\.pug$/, loader: 'pug-plain-loader' },
             { test: /\.styl(us)?$/, use: [ 'vue-style-loader', 'css-loader', 'stylus-loader' ]

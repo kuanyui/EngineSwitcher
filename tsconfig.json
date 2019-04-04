@@ -6,10 +6,10 @@
   "exclude": [
     "node_modules"
   ],
-  "typeRoots": ["./"],
   "compilerOptions": {
     // You have to explicitly set @types to get DefinitelyTyped type definitions
     "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
+    "types": ["web-ext-types"],
     "target": "es2017",
     "strict": true,
     "moduleResolution": "node",  // without this, vue cannot be import by TypeScript

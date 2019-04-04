@@ -18,8 +18,8 @@ export default Vue.extend({
         }
     },
     computed: {
-        enabledEngines () {
-            return this.idOfEnabledEngines.map(id => ENGINES.find(en => en.id === id))
+        enabledEngines (): SearchEngine[] {
+            return ENGINES.filter(en => this.idOfEnabledEngines.includes(en.id)) 
         },
         disabledEngines (): SearchEngine[] {
             return this.ENGINES.filter(x => !this.idOfEnabledEngines.includes(x.id))
