@@ -7,10 +7,13 @@
   .container
     p
     h5 Enabled Search Engines
-    .row
-      select.form-control.col-sm-9(v-model='selectedEngine' :disabled='disabledEngines.length === 0')
-        option(v-for='en in disabledEngines' :value='en') {{ en.name }}
-      button.btn.btn-primary.col-sm-3(@click='addEngine', :disabled='!selectedEngine') + Add
+    .form-row
+      .col-auto
+        select.form-control(v-model='selectedEngine' :disabled='disabledEngines.length === 0')
+          option(v-for='en in disabledEngines' :value='en') {{ en.name }}
+      .col-auto
+        button.btn.btn-primary(@click='addEngine', :disabled='!selectedEngine') + Add
+  
     table
       thead
         tr
