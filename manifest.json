@@ -41,7 +41,7 @@
         }
     },
     "options_ui": {
-        "page": "options_ui/index.html",
+        "page": "dist/options_ui.html",
         "open_in_tab": true
     },
     "content_security_policy": "default-src 'self' 'unsafe-eval'"

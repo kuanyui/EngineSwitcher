@@ -80,3 +80,21 @@ export function getEngineObjOfUrl (currentUrl: string): SearchEngine | undefined
     const urlObj = new URL(currentUrl + '')
     return ENGINES.find(eng => urlObj.hostname.includes(eng.hostname))
 }
+
+export function storageSetSync (d: Partial<MyStorage>): void {
+    browser.storage.sync.set(d)
+}
+
+export class storageManager {
+    static setSync (d: Partial<MyStorage>): void {
+        browser.storage.sync.set(d)
+    }
+    static getSync (): Promise<MyStorage> {
+        return browser.storage.sync.get().then((d) => {
+            return d as unknown as MyStorage
+        }).catch((err) => {
+            console.error('Error when getting settings from browser.storage.sync:', err)
+            return { enabledEngines: [] }
+        })
+    }
+}

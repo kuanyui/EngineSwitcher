@@ -1,10 +1,10 @@
 {
   "include": [
     "*",  // What? `includes` is not same as `include` ???
-    "src/*",
-    "src/**/*",
-    "options_ui/*",
-    "options_ui/**/*",
+    "src/*.ts",
+    "src/**/*.ts",
+    "options_ui/*.ts",
+    "options_ui/*.vue",
   ],
   "exclude": [
     "node_modules"
@@ -17,6 +17,10 @@
     "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],  // Useless for .vue
     "types": ["web-ext-types"],   // Useless for .vue
     "target": "esnext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "strict": true,
     "removeComments": true,
     "moduleResolution": "node",  // without this, vue cannot be import by TypeScript

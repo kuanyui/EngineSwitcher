@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ENGINES, SearchEngine } from '../src/common';
+import { ENGINES, SearchEngine, storageManager } from '../src/common';
 export default Vue.extend({
     data (): {
         ENGINES: typeof ENGINES,
@@ -27,7 +27,7 @@ export default Vue.extend({
     },
     methods: {
         save () {
-            browser.storage.sync.set({ 
+            storageManager.setSync({
                 enabledEngines: this.idOfEnabledEngines
             })
         },
@@ -53,15 +53,13 @@ export default Vue.extend({
             if (index === this.idOfEnabledEngines.length - 1) {return}
             const a0 = this.idOfEnabledEngines[index]
             const a1 = this.idOfEnabledEngines[index + 1]
-            this.idOfEnabledEngines.splice(index, 2, a1, a0) 
+            this.idOfEnabledEngines.splice(index, 2, a1, a0)
             this.save()
         }
     },
     mounted () {
-        browser.storage.sync.get().then((obj) => {
-            this.idOfEnabledEngines = obj.enabledEngines // || [ "duckduckgo", "startpage", "bing", "google" ]
-        }).catch((err) => {
-            console.error('[Error]', err)
+        storageManager.getSync().then((d) => {
+            this.idOfEnabledEngines = d.enabledEngines
         })
     },
 })

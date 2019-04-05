@@ -1,8 +1,8 @@
-import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, TypedMsg_R_String, getEngineObjOfUrl } from "./common";
+import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, TypedMsg_R_String, getEngineObjOfUrl, storageManager } from "./common";
 
 
 const STORAGE: MyStorage = {
-    enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ]   // Shit WebExtention
+    enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ]
 }
 
 function getEnabledEngines (): SearchEngine[] {
@@ -17,7 +17,7 @@ async function getCurrentState (tabId: number, currentUrl?: string): Promise<Cur
     const engine = getEngineObjOfUrl(currentUrl)
     if (!engine) { console.error('[To Developer] This should not happened'); return null}
     let curIdx = engines.indexOf(engine)
-    if (curIdx === -1) { 
+    if (curIdx === -1) {
         curIdx = 0
     }
     const curEng = engines[curIdx]
@@ -59,10 +59,6 @@ browser.pageAction.onClicked.addListener(function (tab) {
     goToNextEngine(tab)
 })
 
-browser.runtime.onMessage.addListener((req: any, sender: any, cb: any) => {
-
-})
-
 browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
     if (changeInfo.url) {
         console.log(tabId, changeInfo)
@@ -80,9 +76,7 @@ browser.storage.sync.get().then((obj) => {
     console.log('[background] storage gotten!', obj)
     if (obj.enabledEngines === undefined) {
         // init data
-        browser.storage.sync.set({
-            ...STORAGE
-        })
+        storageManager.setSync({ ...STORAGE })
     } else {
         STORAGE.enabledEngines = obj.enabledEngines as string[]
     }

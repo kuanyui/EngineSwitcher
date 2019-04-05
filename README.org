@@ -38,6 +38,9 @@ npm i
 make dev
 web-ext run --verbose --firefox-profile ~/.mozilla/firefox/PROFILE_DIR_NAME
 #+END_SRC
+#+BEGIN_QUOTE 
+If webpack watch exit immediately without any error, please try [[https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers]]
+#+END_QUOTE
 ** Deploy (Build .xpi file & run a HTTP server for download)
 #+BEGIN_SRC sh
 make xpi-server

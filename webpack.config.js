@@ -1,10 +1,11 @@
 const { VueLoaderPlugin } = require('vue-loader')
+const fs = require('fs')
 
 const config = {
     entry: {
         background: './src/background.ts',
-        content: './src/content.ts',     
-        options_ui: './options_ui/index.ts' 
+        content: './src/content.ts',
+        options_ui: './options_ui/index.ts'
     },
     output: {
         filename: '[name].js',
@@ -12,9 +13,9 @@ const config = {
     },
     module: {
         rules: [
-            { test: /\.tsx?$/, use: { 
+            { test: /\.tsx?$/, use: {
                 loader: 'ts-loader',
-                options: { appendTsSuffixTo: [/\.vue$/] } } 
+                options: { appendTsSuffixTo: [/\.vue$/] } }
             },
             { test: /\.vue$/, use: 'vue-loader' },
             { test: /\.pug$/, loader: 'pug-plain-loader' },
@@ -32,13 +33,15 @@ const config = {
 
 module.exports = (env, argv) => {
     console.log('mode =', argv.mode)
-  if (argv.mode === 'development') {
-    config.devtool = 'source-map';
-  }
+    fs.copyFile('options_ui/index.html', 'dist/options_ui.html', (err) => { if (err) console.error(err); throw err; });
+    console.log('copy index.html')
+    if (argv.mode === 'development') {
+        config.devtool = 'source-map';
+    }
 
-  if (argv.mode === 'production') {
-    //...
-  }
+    if (argv.mode === 'production') {
+        //...
+    }
 
-  return config
+    return config
 };
