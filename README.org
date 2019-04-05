@@ -66,7 +66,6 @@ For paranoid users such as me, these are all used permissions with its usages:
 - =startpage.com=
   - =startpage.com= protect privacy in a extremely paranoid way: it's impossible to get query string from URL. Therefore, I have to inserting =content.js= to get query string from =<input>=.
 
--  ~"content_security_policy": "default-src 'self' 'unsafe-eval'"~ : =unsafe-eval= is required by =vue.min.js=
 * 3rd-Party Libraries
 - [[https://github.com/vuejs/vue/blob/v2.6.4/dist/vue.min.js][Vue v2.6.4]]
 
