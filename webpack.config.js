@@ -1,5 +1,5 @@
 const { VueLoaderPlugin } = require('vue-loader')
-const fs = require('fs')
+const CopyPlugin = require('copy-webpack-plugin')
 
 const config = {
     entry: {
@@ -19,22 +19,26 @@ const config = {
             },
             { test: /\.vue$/, use: 'vue-loader' },
             { test: /\.pug$/, loader: 'pug-plain-loader' },
-            { test: /\.styl(us)?$/, use: [ 'vue-style-loader', 'css-loader', 'stylus-loader' ]
-            }
+            { test: /\.styl(us)?$/, use: [ 'vue-style-loader', 'css-loader', 'stylus-loader' ] },
+            { test: /\.(gif|svg|jpg|png)$/, loader: "file-loader" },
+            { test: /\.css$/, use: ['style-loader', 'css-loader'] }
         ]
     },
     resolve: {
       extensions: [ '.tsx', '.ts', '.js' ]
     },
     plugins: [
-      new VueLoaderPlugin()
+      new VueLoaderPlugin(),
+      new CopyPlugin([
+        { from: 'options_ui/index.html', to: 'options_ui.html', force: true, toType: 'file' },
+        // { from: 'img/', to: 'img/', force: true, toType: 'dir' },
+        // { from: 'manifest.json', to: 'manifest.json', force: true, toType: 'file' },
+      ]),
     ]
 }
 
 module.exports = (env, argv) => {
     console.log('mode =', argv.mode)
-    fs.copyFile('options_ui/index.html', 'dist/options_ui.html', (err) => { if (err) console.error(err); throw err; });
-    console.log('copy index.html')
     if (argv.mode === 'development') {
         config.devtool = 'source-map';
     }

@@ -12,7 +12,7 @@ build:
 
 xpi: build
 	mkdir -p ${XPI_DIR}
-	zip -r -FS "${XPI_DIR}/${NAME}.xpi" dist/ img/ manifest.json README.org options_ui/
+	zip -r -FS "${XPI_DIR}/${NAME}.xpi" dist/ img/ manifest.json README.org
 
 xpi-server: xpi
 	ifconfig | grep "inet " | grep --invert-match '127.0.0.1'

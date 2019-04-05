@@ -43,6 +43,5 @@
     "options_ui": {
         "page": "dist/options_ui.html",
         "open_in_tab": true
-    },
-    "content_security_policy": "default-src 'self' 'unsafe-eval'"
+    }
 }

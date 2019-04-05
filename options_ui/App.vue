@@ -1,5 +1,33 @@
 <template lang="pug">
-    
+.container
+  nav.navbar.navbar-light.bg-light
+    a.navbar-brand(href='https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/', target='_blank')
+      img.d-inline-block.align-top(src='../img/icon.svg', width='30', height='30', alt='')
+      span Engine Switcher
+  .container
+    p
+    h5 Enabled Search Engines
+    .row
+      select.form-control.col-sm-9(v-model='selectedEngine' :disabled='disabledEngines.length === 0')
+        option(v-for='en in disabledEngines' :value='en') {{ en.name }}
+      button.btn.btn-primary.col-sm-3(@click='addEngine', :disabled='!selectedEngine') + Add
+    table
+      thead
+        tr
+          th Order
+          th Name
+          th Move
+          th Delete
+      tbody
+        tr(v-for='(en, index) in enabledEngines' :key='en.id')
+          td {{ index + 1 }}
+          td {{ en.name }}
+          td
+            span.icon-button(@click='moveUp(index)') &#x25B2;
+            span.icon-button(@click='moveDn(index)') &#x25BC;
+          td
+            span.icon-button(@click='delEngine(index)') &#x2A09;
+
 </template>
 
 <script lang="ts">
@@ -7,22 +35,23 @@ import Vue from 'vue'
 import { ENGINES, SearchEngine, storageManager } from '../src/common';
 export default Vue.extend({
     data (): {
-        ENGINES: typeof ENGINES,
         idOfEnabledEngines: string[],
         selectedEngine: null | SearchEngine
     } {
         return {
-            ENGINES: ENGINES,
-            idOfEnabledEngines: [], 
+            idOfEnabledEngines: [],
             selectedEngine: null,
         }
     },
     computed: {
         enabledEngines (): SearchEngine[] {
-            return ENGINES.filter(en => this.idOfEnabledEngines.includes(en.id))
+            return this.idOfEnabledEngines.map((id): SearchEngine => { 
+                const en = ENGINES.find(e => e.id === id)
+                return en as SearchEngine
+            })
         },
         disabledEngines (): SearchEngine[] {
-            return this.ENGINES.filter(x => !this.idOfEnabledEngines.includes(x.id))
+            return ENGINES.filter(x => !this.idOfEnabledEngines.includes(x.id))
         }
     },
     methods: {
