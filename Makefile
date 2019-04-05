@@ -1,4 +1,4 @@
-.PHONY: dev build xpi xpi-server clear
+.PHONY: dev build xpi xpi-server clear zip-repo
 
 NAME="EngineSwitcher"
 BIN:="node_modules/.bin"
@@ -20,3 +20,6 @@ xpi-server: clear xpi
 
 clear:
 	rm -rf dist/*
+
+zip-repo: clear
+	zip -r "../${NAME}-upload.zip" .    -x * node_modules/\*
