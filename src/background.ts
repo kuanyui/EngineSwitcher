@@ -47,7 +47,7 @@ async function getCurrentState (tabId: number, currentUrl?: string): Promise<Cur
 
 
 async function goToNextEngine (tab: browser.tabs.Tab) {
-    if (!tab.id) { console.error('ERROR: What the fuck?'); return }
+    if (!tab.id) { console.error('ERROR: What the snap?'); return }
     const state = await getCurrentState(tab.id, tab.url)
     if (!state) {return}
     browser.tabs.update(tab.id, {
