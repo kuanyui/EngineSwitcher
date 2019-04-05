@@ -1,17 +1,24 @@
 {
-  "includes": [
+  "include": [
+    "*",  // What? `includes` is not same as `include` ???
     "src/*",
     "src/**/*",
+    "options_ui/*",
+    "options_ui/**/*",
   ],
   "exclude": [
     "node_modules"
   ],
+  "typeAcquisition": {
+    "enable": true,
+    "include": ["web-ext-types"]  // Useless for .vue
+  },
   "compilerOptions": {
-    // You have to explicitly set @types to get DefinitelyTyped type definitions
-    "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],
-    "types": ["web-ext-types"],
-    "target": "es2017",
+    "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],  // Useless for .vue
+    "types": ["web-ext-types"],   // Useless for .vue
+    "target": "esnext",
     "strict": true,
+    "removeComments": true,
     "moduleResolution": "node",  // without this, vue cannot be import by TypeScript
   }
 }
