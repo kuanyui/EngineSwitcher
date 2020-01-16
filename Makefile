@@ -22,4 +22,4 @@ clear:
 	rm -rf dist/*
 
 zip-repo: clear
-	zip -r "../${NAME}-upload.zip" .    -x * node_modules/\*
+	zip -r "../${NAME}-upload.zip" . -x .git/\* node_modules/\*

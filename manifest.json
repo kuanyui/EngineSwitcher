@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "EngineSwitcher",
-    "version": "0.5",
+    "version": "0.5.1",
     "applications": {
         "gecko": {
             "id": "{44dc2f10-2812-48f1-bb39-e880679115b0}"

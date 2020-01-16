@@ -14,7 +14,7 @@ function getQueryStringFromDom (): string {
     if (!engine) { return 'ERROR: Not supported search engine' }
     switch (engine.id) {
         case 'startpage': {
-            const el = document.querySelector("#query") as HTMLInputElement
+            const el = document.querySelector("#q") as HTMLInputElement
             if (!el) {return "ERROR: StartPage has changed its HTML structure, please open an issue on EngineSwitcher's Github"}
             return el.value
         }
