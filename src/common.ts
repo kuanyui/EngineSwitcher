@@ -1,4 +1,4 @@
-export type search_engine_t = 'duckduckgo' | 'startpage' | 'bing' | 'google'
+export type search_engine_t = 'duckduckgo' | 'startpage' | 'bing' | 'google' | 'enwiki'
 export interface SearchEngine {
     /** duckduckgo */
     id: search_engine_t,
@@ -59,6 +59,14 @@ export const ENGINES: SearchEngine[] = [
         hostname: 'www.google.com',
         queryKey: 'q',
         queryUrl: 'https://www.google.com/search?q={}',
+        queryNeedContentScript: false,
+    },
+    { 
+        id: 'enwiki',
+        name: 'English Wikipedia',
+        hostname: 'en.wikipedia.org',
+        queryKey: 'search',
+        queryUrl: 'https://en.wikipedia.org/wiki/Spezial:Suche?search={}',
         queryNeedContentScript: false,
     },
 ]
