@@ -2,7 +2,7 @@ import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMs
 
 
 const STORAGE: MyStorage = {
-    enabledEngines: [ "duckduckgo", "startpage", "bing", "google", "enwiki" ]
+    enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ]
 }
 
 function getEnabledEngines (): SearchEngine[] {
