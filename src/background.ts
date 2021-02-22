@@ -1,8 +1,8 @@
-import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, TypedMsg_R_String, getEngineObjOfUrl, storageManager } from "./common";
+import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, TypedMsg_R_String, getEngineObjOfUrl, storageManager, search_engine_t } from "./common";
 
 
 const STORAGE: MyStorage = {
-    enabledEngines: [ "duckduckgo", "startpage", "bing", "google" ]
+    enabledEngines: [ "duckduckgo", "ecosia", "startpage", "bing", "google" ]
 }
 
 function getEnabledEngines (): SearchEngine[] {
@@ -30,12 +30,13 @@ async function getCurrentState (tabId: number, currentUrl?: string): Promise<Cur
             const res = await sending as TypedMsg_R_String
             keyword = res.d
         } catch (err) {
-            keyword = 'ERROR' // If error, it means content_script doesn't run or respond 
+            keyword = 'ERROR' // If error, it means content_script doesn't run or respond
         }
     } else {
         const urlObj = new URL(currentUrl)
         const params = new URLSearchParams(urlObj.search)
         keyword = params.get(curEng.queryKey) || ''
+        console.log('keyword ===', urlObj)
     }
     const nextEng = engines[(curIdx + 1) % engines.length]
     return {
@@ -78,7 +79,7 @@ browser.storage.sync.get().then((obj) => {
         // init data
         storageManager.setSync({ ...STORAGE })
     } else {
-        STORAGE.enabledEngines = obj.enabledEngines as string[]
+        STORAGE.enabledEngines = obj.enabledEngines as search_engine_t[]
     }
     // STORAGE = obj
 }).catch(err => {console.error(err)})

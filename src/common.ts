@@ -1,15 +1,15 @@
-export type search_engine_t = 'duckduckgo' | 'startpage' | 'bing' | 'google' | 'enwiki'
+export type search_engine_t = 'duckduckgo' | 'ecosia' | 'startpage' | 'bing' | 'google' | 'enwiki'
 export interface SearchEngine {
     /** duckduckgo */
     id: search_engine_t,
     /** DuckDuckGo */
     name: string,
-    /** 
-     * This should be a finger print which is able to cover all conditions. 
+    /**
+     * This should be a finger print which is able to cover all conditions.
      * e.g. Sometimes, the hostname of StartPage will become to s7-us4.startpage.com
      * so its hostname should be startpage.com instead of www.startpage.com
      */
-    hostname: string, 
+    hostname: string,
     /** `q` in ?q= */
     queryKey: string,
     /** https://duckduckgo.com/?q={} */
@@ -25,7 +25,7 @@ export interface CurrentState {
 }
 
 export interface MyStorage {
-    enabledEngines: string[],
+    enabledEngines: search_engine_t[],
 }
 
 export const ENGINES: SearchEngine[] = [
@@ -37,7 +37,15 @@ export const ENGINES: SearchEngine[] = [
         queryUrl: 'https://duckduckgo.com/?q={}',
         queryNeedContentScript: false,
     },
-    { 
+    {
+        id: 'ecosia',
+        name: 'Ecosia',
+        hostname: 'www.ecosia.org',
+        queryKey: 'q',
+        queryUrl: 'https://www.ecosia.org/search?q={}',
+        queryNeedContentScript: false,
+    },
+    {
         id: 'startpage',
         name: 'StartPage',
         hostname: 'startpage.com',
@@ -45,7 +53,7 @@ export const ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.startpage.com/do/dsearch/?query={}',
         queryNeedContentScript: true,
     },
-    { 
+    {
         id: 'bing',
         name: 'Bing',
         hostname: 'www.bing.com',
@@ -53,7 +61,7 @@ export const ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.bing.com/search?q={}',
         queryNeedContentScript: false,
     },
-    { 
+    {
         id: 'google',
         name: 'Google',
         hostname: 'www.google.com',
@@ -61,12 +69,12 @@ export const ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.google.com/search?q={}',
         queryNeedContentScript: false,
     },
-    { 
+    {
         id: 'enwiki',
-        name: 'English Wikipedia',
+        name: 'English Wikipedia (Not recommended)',
         hostname: 'en.wikipedia.org',
         queryKey: 'search',
-        queryUrl: 'https://en.wikipedia.org/wiki/Spezial:Suche?search={}',
+        queryUrl: 'https://en.wikipedia.org/w/index.php?search={}&title=Special:Search&fulltext=1&ns0=1',
         queryNeedContentScript: false,
     },
 ]

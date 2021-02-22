@@ -13,7 +13,7 @@
           option(v-for='en in disabledEngines' :value='en') {{ en.name }}
       .col-auto
         button.btn.btn-primary(@click='addEngine', :disabled='!selectedEngine') + Add
-  
+
     table
       thead
         tr
@@ -35,10 +35,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ENGINES, SearchEngine, storageManager } from '../src/common';
+import { ENGINES, SearchEngine, storageManager, search_engine_t } from '../src/common';
 export default Vue.extend({
     data (): {
-        idOfEnabledEngines: string[],
+        idOfEnabledEngines: search_engine_t[],
         selectedEngine: null | SearchEngine
     } {
         return {
@@ -48,7 +48,7 @@ export default Vue.extend({
     },
     computed: {
         enabledEngines (): SearchEngine[] {
-            return this.idOfEnabledEngines.map((id): SearchEngine => { 
+            return this.idOfEnabledEngines.map((id): SearchEngine => {
                 const en = ENGINES.find(e => e.id === id)
                 return en as SearchEngine
             })
