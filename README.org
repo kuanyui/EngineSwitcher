@@ -4,10 +4,13 @@ A WebExtension to switch current page between various search engines in just one
 So you can easily keep your privacy as possible as you can.
 
 Currently supported search engines:
+
 - DuckDuckGo
+- Ecosia
 - StartPage
 - Bing
 - Google
+- Wikipedia English (Experimental)
 
 For more information please see [[https://github.com/kuanyui/EngineSwitcher][GitHub]].
 
@@ -64,7 +67,7 @@ For paranoid users such as me, these are all used permissions with its usages:
   - Watch the URL changing of all tabs, for checking if URL is supported stie, and decide if show / hide =pageAction= button. (=browser.tabs.onUpdated=).
   - Get the URL of current page (=Tab.url= in =pageAction.onClicked=)
   - Redirect to new URL (=tabs.update({url: string})=)
-  #+BEGIN_QUOTE 
+  #+BEGIN_QUOTE
     [[https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Differences_between_desktop_and_Android#Effect_on_your_add-on_UI][Firefox for Android requires developer call =browser.pageAction.show()= explicitly]] and it's impossible to use =pageAction= with only =manifest.page_action.show_matches= to implement this extension.
   #+END_QUOTE
 
@@ -80,5 +83,6 @@ For paranoid users such as me, these are all used permissions with its usages:
 * TODOs
 - Customizable keyboard shortcuts.
 - More search engines.
+- Buttons for Fenix
 * License
 WTFPL 2.0

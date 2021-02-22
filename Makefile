@@ -1,6 +1,6 @@
 .PHONY: dev build xpi xpi-server clear zip-repo
 
-NAME="EngineSwitcher"
+NAME="DuckDuckGoQuack"
 BIN:="node_modules/.bin"
 XPI_DIR=../xpi
 
