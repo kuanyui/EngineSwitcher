@@ -1,9 +1,7 @@
 import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, TypedMsg_R_String, getEngineObjOfUrl, storageManager, search_engine_t } from "./common";
 
 
-const STORAGE: MyStorage = {
-    enabledEngines: [ "duckduckgo", "ecosia", "startpage", "bing", "google" ]
-}
+const STORAGE: MyStorage = storageManager.getSyncDefault()
 
 function getEnabledEngines (): SearchEngine[] {
     return ENGINES.filter(en => STORAGE.enabledEngines.includes(en.id))
@@ -73,20 +71,11 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
 
 // Storage
 console.log('[background] first time to get config from storage')
-browser.storage.sync.get().then((obj) => {
-    console.log('[background] storage gotten!', obj)
-    if (obj.enabledEngines === undefined) {
-        // init data
-        storageManager.setSync({ ...STORAGE })
-    } else {
-        STORAGE.enabledEngines = obj.enabledEngines as search_engine_t[]
-    }
-    // STORAGE = obj
-}).catch(err => {console.error(err)})
+storageManager.getSync().then((obj) => {
+    Object.assign(STORAGE, obj.enabledEngines)
+})
 
-browser.storage.onChanged.addListener((changes, areaName) => {
-    if (areaName === 'sync') {
-        console.log('[background] storage changed!', changes)
-        STORAGE.enabledEngines = changes.enabledEngines.newValue
-    }
+storageManager.onSyncChanged((changes) => {
+    console.log('[background] storage changed!', changes)
+    STORAGE.enabledEngines = changes.enabledEngines.newValue
 })

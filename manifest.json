@@ -25,12 +25,17 @@
         {
             "run_at": "document_start",
             "matches": [
-                "*://*.startpage.com/*"
+                "*://*.startpage.com/*",
+                "*://duckduckgo.com/*",
+                "*://*.ecosia.org/*",
+                "*://*.bing.com/*",
+                "*://www.google.com/*"
             ],
             "js": ["dist/content.js"]
         }
     ],
     "permissions": [ "tabs", "storage" ],
+    "web_accessible_resources": ["img/engines/*.svg"],
     "commands": {
         "_execute_page_action": {
             "suggested_key": {
@@ -45,3 +50,4 @@
         "open_in_tab": true
     }
 }
+

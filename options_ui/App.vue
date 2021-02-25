@@ -1,7 +1,7 @@
 <template lang="pug">
 .container
   nav.navbar.navbar-light.bg-light
-    a.navbar-brand(href='https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/', target='_blank')
+    a.navbar-brand(href='https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/' target='_blank')
       img.d-inline-block.align-top(src='../img/icon.svg', width='30', height='30', alt='')
       span Engine Switcher
   .container
@@ -22,7 +22,7 @@
           th Move
           th Delete
       tbody
-        tr(v-for='(en, index) in enabledEngines' :key='en.id')
+        tr(v-for='(en, index) in enabledEngineObjList' :key='en.id')
           td {{ index + 1 }}
           td {{ en.name }}
           td
@@ -30,68 +30,69 @@
             span.icon-button(@click='moveDn(index)') &#x25BC;
           td
             span.icon-button(@click='delEngine(index)') &#x2A09;
+    label Use float buttons (for mobile)
+      input(type="checkbox" v-model="copiedModel.floatButton.enabled" @changed="save")
 
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { ENGINES, SearchEngine, storageManager, search_engine_t } from '../src/common';
+import { ENGINES, SearchEngine, storageManager, search_engine_t, MyStorage } from '../src/common';
 export default Vue.extend({
     data (): {
-        idOfEnabledEngines: search_engine_t[],
+        copiedModel: MyStorage,
         selectedEngine: null | SearchEngine
     } {
         return {
-            idOfEnabledEngines: [],
+            copiedModel: storageManager.getSyncDefault(),
             selectedEngine: null,
         }
     },
     computed: {
-        enabledEngines (): SearchEngine[] {
-            return this.idOfEnabledEngines.map((id): SearchEngine => {
+        enabledEngineObjList (): SearchEngine[] {
+            return this.copiedModel.enabledEngines.map((id): SearchEngine => {
                 const en = ENGINES.find(e => e.id === id)
                 return en as SearchEngine
             })
         },
         disabledEngines (): SearchEngine[] {
-            return ENGINES.filter(x => !this.idOfEnabledEngines.includes(x.id))
+            return ENGINES.filter(x => !this.copiedModel.enabledEngines.includes(x.id))
         }
     },
     methods: {
         save () {
-            storageManager.setSync({
-                enabledEngines: this.idOfEnabledEngines
-            })
+            storageManager.setSync(this.copiedModel)
+            console.log('local storage saved!!!')
         },
         addEngine () {
             if (!this.selectedEngine) {return}
-            this.idOfEnabledEngines.push(this.selectedEngine.id)
+            this.copiedModel.enabledEngines.push(this.selectedEngine.id)
             this.selectedEngine = null
-            this.save()
         },
         delEngine (index: number) {
-            if (this.idOfEnabledEngines.length === 1) {return}
-            this.idOfEnabledEngines.splice(index, 1)
-            this.save()
+            if (this.copiedModel.enabledEngines.length === 1) {return}
+            this.copiedModel.enabledEngines.splice(index, 1)
         },
         moveUp (index: number) {
             if (index === 0) {return}
-            const a0 = this.idOfEnabledEngines[index - 1]
-            const a1 = this.idOfEnabledEngines[index]
-            this.idOfEnabledEngines.splice(index - 1, 2, a1, a0)
-            this.save()
+            const a0 = this.copiedModel.enabledEngines[index - 1]
+            const a1 = this.copiedModel.enabledEngines[index]
+            this.copiedModel.enabledEngines.splice(index - 1, 2, a1, a0)
         },
         moveDn (index: number) {
-            if (index === this.idOfEnabledEngines.length - 1) {return}
-            const a0 = this.idOfEnabledEngines[index]
-            const a1 = this.idOfEnabledEngines[index + 1]
-            this.idOfEnabledEngines.splice(index, 2, a1, a0)
-            this.save()
+            if (index === this.copiedModel.enabledEngines.length - 1) {return}
+            const a0 = this.copiedModel.enabledEngines[index]
+            const a1 = this.copiedModel.enabledEngines[index + 1]
+            this.copiedModel.enabledEngines.splice(index, 2, a1, a0)
         }
     },
     mounted () {
         storageManager.getSync().then((d) => {
-            this.idOfEnabledEngines = d.enabledEngines
+            this.copiedModel = d
+            this.$watch(
+                () => this.copiedModel,
+                (nv) => { this.save() },
+                { deep: true })
         })
     },
 })

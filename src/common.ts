@@ -26,6 +26,9 @@ export interface CurrentState {
 
 export interface MyStorage {
     enabledEngines: search_engine_t[],
+    floatButton: {
+        enabled: boolean,
+    }
 }
 
 export const ENGINES: SearchEngine[] = [
@@ -102,15 +105,35 @@ export function storageSetSync (d: Partial<MyStorage>): void {
 }
 
 export class storageManager {
+    static getSyncDefault(): MyStorage {
+        return {
+            enabledEngines: ["duckduckgo", "ecosia", "startpage", "bing", "google"],
+            floatButton: {
+                enabled: false,
+            },
+        }
+    }
     static setSync (d: Partial<MyStorage>): void {
         browser.storage.sync.set(d)
     }
     static getSync (): Promise<MyStorage> {
-        return browser.storage.sync.get().then((d) => {
-            return d as unknown as MyStorage
+        return browser.storage.sync.get().then((_d) => {
+            const d = _d as unknown as MyStorage
+            if (d.enabledEngines === undefined) {
+                // init data
+                storageManager.setSync(storageManager.getSyncDefault())
+            }
+            return d
         }).catch((err) => {
             console.error('Error when getting settings from browser.storage.sync:', err)
-            return { enabledEngines: [] }
+            return storageManager.getSyncDefault()
+        })
+    }
+    static onSyncChanged(cb: (changes: browser.storage.ChangeDict) => void) {
+        browser.storage.onChanged.addListener((changes, areaName) => {
+            if (areaName === 'sync') {
+                cb(changes)
+            }
         })
     }
 }

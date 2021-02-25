@@ -1,7 +1,6 @@
 import { TypedMsg, TypedMsg_R_String, isUrlSupported, getEngineObjOfUrl } from "./common";
 
 browser.runtime.onMessage.addListener((_ev: any) => {
-    console.log('幹')
     const ev = _ev as TypedMsg
     if (ev.type === 'askQueryString') {
         const res: TypedMsg_R_String = { d: getQueryStringFromDom() }
@@ -16,10 +15,15 @@ function getQueryStringFromDom (): string {
     switch (engine.id) {
         case 'startpage': {
             const el = document.querySelector("#q") as HTMLInputElement
-            console.log('QQQQQQQQQQQQ', el)
             if (!el) {return "ERROR: StartPage has changed its HTML structure, please open an issue on EngineSwitcher's Github"}
             return el.value
         }
     }
     return "ERROR: Not handled. Please open an issue on EngineSwitcher's Github"
+}
+
+function ddgqSetupFloatingBar() {
+    const floatEl = document.createElement('div')
+    floatEl.id = 'ddgqFloatingBar'
+    floatEl.innerHTML = `<img src="">`
 }
