@@ -26,13 +26,10 @@
     "webpack-cli": "^3.3.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode=development --watch",
-    "build": "webpack --mode=production"
   },
   "keywords": [
     "webextension"
   ],
   "author": "ono ono (kuanyui)",
-  "license": "WTFPL"
+  "license": "WTFPL 2.0"
 }

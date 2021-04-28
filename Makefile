@@ -4,11 +4,11 @@ NAME="DuckDuckGoQuack"
 BIN:="node_modules/.bin"
 XPI_DIR=../xpi
 
-dev: clear
-	npm run dev
+watch: clear
+	./node_modules/.bin/webpack --mode=development --watch
 
 build: clear
-	npm run build
+	./node_modules/.bin/webpack --mode=production
 
 xpi: clear build
 	mkdir -p ${XPI_DIR}
