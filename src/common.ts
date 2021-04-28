@@ -145,9 +145,15 @@ class StorageManager {
     getData (): Promise<MyStorage> {
         return this.area.get().then((_d) => {
             const d = _d as unknown as MyStorage
-            if (d.enabledEngines === undefined) {
-                // init data
-                storageManager.setData(storageManager.getDefaultData())
+            // Too lazy to do migration ....
+            if (
+                d.enabledEngines === undefined ||
+                d.floatButton === undefined ||
+                d.floatButton.enabled === undefined
+            ) {
+                const defaultValue = storageManager.getDefaultData()
+                storageManager.setData(defaultValue)
+                return defaultValue
             }
             return d
         }).catch((err) => {
