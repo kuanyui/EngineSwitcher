@@ -45,9 +45,15 @@ async function getEnabledEngines(): Promise<SearchEngine[]> {
     return []
 }
 
+function removeFloatBar() {
+    const el = document.querySelector('#ddgqFloatBar')
+    if (el) { el.remove() }
+}
+
 async function setupFloatBar() {
+    removeFloatBar()
     const styleEl = document.createElement('style')
-    const HEIGHT = 40
+    const ICON_SIZE = 40
     styleEl.innerText = `
     #ddgqFloatBar {
         --bg: #ffffff;
@@ -59,7 +65,6 @@ async function setupFloatBar() {
         z-index: 99999999999;
         bottom: 0;
         left: 0;
-        height: ${HEIGHT}px;
         background: var(--bg);
         border: 1px solid var(--bd);
     }
@@ -68,21 +73,24 @@ async function setupFloatBar() {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 2px 10px;
         cursor: pointer;
+        padding: 2px 10px;
+    }
+    #ddgqFloatBar a.closeBtn {
+        padding: 0;
     }
     #ddgqFloatBar a:hover {
         background: var(--bgActive);
     }
     #ddgqFloatBar a .iconImg {
-        width: ${HEIGHT-4}px;
+        width: ${ICON_SIZE}px;
     }
     #ddgqFloatBar a.active {
         background: var(--bgActive);
         filter: brightness(0.9) saturate(0.6);
     }
     body {
-        padding-bottom: ${HEIGHT}px;
+        padding-bottom: ${ICON_SIZE}px;
     }
     `
     const floatEl = document.createElement('div')
@@ -95,10 +103,8 @@ async function setupFloatBar() {
     </svg>`
     const closeBtn = document.createElement('a')
     closeBtn.innerHTML = closeIconSvg
-    closeBtn.onclick = function () {
-        const el = document.querySelector('#ddgqFloatBar')
-        if (el) { el.remove() }
-    }
+    closeBtn.className = 'closeBtn'
+    closeBtn.onclick = function () { removeFloatBar() }
 
     floatEl.innerHTML = `
     ${enabledEngines.map(eng => genIconHtml(eng, query)).join('')}
