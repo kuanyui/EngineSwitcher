@@ -16,6 +16,7 @@ export interface SearchEngine {
     queryUrl: string,
     /** Need to get query string via content.js */
     queryNeedContentScript: boolean,
+    iconUrl: string,
 }
 
 export interface CurrentState {
@@ -39,6 +40,7 @@ export const ENGINES: SearchEngine[] = [
         queryKey: 'q',
         queryUrl: 'https://duckduckgo.com/?q={}',
         queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/duckduckgo.svg'),
     },
     {
         id: 'ecosia',
@@ -47,6 +49,7 @@ export const ENGINES: SearchEngine[] = [
         queryKey: 'q',
         queryUrl: 'https://www.ecosia.org/search?q={}',
         queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/ecosia.svg'),
     },
     {
         id: 'startpage',
@@ -55,6 +58,7 @@ export const ENGINES: SearchEngine[] = [
         queryKey: 'query',
         queryUrl: 'https://www.startpage.com/do/dsearch/?query={}',
         queryNeedContentScript: true,
+        iconUrl: browser.runtime.getURL('img/engines/startpage.svg'),
     },
     {
         id: 'bing',
@@ -63,6 +67,7 @@ export const ENGINES: SearchEngine[] = [
         queryKey: 'q',
         queryUrl: 'https://www.bing.com/search?q={}',
         queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/bing.svg'),
     },
     {
         id: 'google',
@@ -71,6 +76,7 @@ export const ENGINES: SearchEngine[] = [
         queryKey: 'q',
         queryUrl: 'https://www.google.com/search?q={}',
         queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/google.svg'),
     },
     {
         id: 'enwiki',
@@ -79,15 +85,19 @@ export const ENGINES: SearchEngine[] = [
         queryKey: 'search',
         queryUrl: 'https://en.wikipedia.org/w/index.php?search={}&title=Special:Search&fulltext=1&ns0=1',
         queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/wikipedia.svg'),
     },
 ]
 
-export interface TypedMsg {
-    type: 'askQueryString' | 'ansQueryString'
-}
 
-export interface TypedMsg_R_String {
-    d: string
+export type TypedMsg =
+{ type: 'getQueryStringFromPage', data: string } |
+{ type: 'getEnabledEnginesFromBg', data: SearchEngine[] }
+
+export function parseUrlToGetQuery(engine: SearchEngine, url: string): string {
+    const urlObj = new URL(url)
+    const params = new URLSearchParams(urlObj.search)
+    return params.get(engine.queryKey) || '[Error] cannot extract query string from URL'
 }
 
 export function isUrlSupported (currentUrl: string): boolean {

@@ -1,5 +1,12 @@
-import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, TypedMsg_R_String, getEngineObjOfUrl, storageManager, search_engine_t } from "./common";
+import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, getEngineObjOfUrl, storageManager, search_engine_t } from "./common";
 
+browser.runtime.onMessage.addListener((_ev: any) => {
+    const ev = _ev as TypedMsg
+    const reply = (r: TypedMsg) => Promise.resolve(r)
+    switch (ev.type) {
+        case 'getEnabledEnginesFromBg': return reply({ type: ev.type, data: getEnabledEngines()  })
+    }
+})
 
 const STORAGE: MyStorage = storageManager.getSyncDefault()
 
@@ -19,16 +26,18 @@ async function getCurrentState (tabId: number, currentUrl?: string): Promise<Cur
         curIdx = 0
     }
     const curEng = engines[curIdx]
-    let keyword: string
+    let keyword: string = 'ERROR'
     if (curEng.queryNeedContentScript) {
-        const tmsg: TypedMsg = { type: 'askQueryString' }
-        const sending = browser.tabs.sendMessage(tabId, tmsg)
         console.log('Send to tab...')
         try {
-            const res = await sending as TypedMsg_R_String
-            keyword = res.d
+            const msg: TypedMsg = { type: 'getQueryStringFromPage', data: '' }
+            const res = await browser.tabs.sendMessage(tabId, msg) as TypedMsg
+            if (res.type === 'getQueryStringFromPage') {
+                keyword = res.data
+            }
         } catch (err) {
-            keyword = 'ERROR' // If error, it means content_script doesn't run or respond
+            // If error, it means content_script doesn't run or respond
+            console.error('Encounter an unexpected error, please report. Sorry!')
         }
     } else {
         const urlObj = new URL(currentUrl)
