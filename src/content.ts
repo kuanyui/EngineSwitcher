@@ -1,4 +1,4 @@
-import { TypedMsg, isUrlSupported, getEngineObjOfUrl, search_engine_t, SearchEngine, parseUrlToGetQuery } from "./common";
+import { TypedMsg, isUrlSupported, getEngineObjOfUrl, search_engine_t, SearchEngine, parseUrlToGetQuery, storageManager } from "./common";
 
 browser.runtime.onMessage.addListener((_ev: any) => {
     const ev = _ev as TypedMsg
@@ -25,11 +25,15 @@ function startpageGetQueryString(): string {
     return el.value
 }
 
-window.setTimeout(() => setupFloatBar(), 200)
-window.setTimeout(() => setupFloatBar(), 800)
-window.setTimeout(() => setupFloatBar(), 1600)
+storageManager.getSync().then((cfg) => {
+    if (cfg.floatButton.enabled) {
+        window.setTimeout(() => setupFloatBar(), 200)
+        window.setTimeout(() => setupFloatBar(), 800)
+        window.setTimeout(() => setupFloatBar(), 1600)
+    }
+})
 
-function genIconHtml(engine: SearchEngine, query: string): string {
+    function genIconHtml(engine: SearchEngine, query: string): string {
     const kls = engine.hostname === location.hostname ? 'active' : ''
     return `
     <a href="${engine.queryUrl.replace(/{}/, query)}" class="${kls}">

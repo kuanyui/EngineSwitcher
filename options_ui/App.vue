@@ -30,7 +30,7 @@
             span.icon-button(@click='moveDn(index)') &#x25BC;
           td
             span.icon-button(@click='delEngine(index)') &#x2A09;
-    label Use float buttons (for mobile)
+    label Use float buttons (Especially useful for mobile)
       input(type="checkbox" v-model="copiedModel.floatButton.enabled" @changed="save")
 
 </template>

@@ -91,8 +91,10 @@ export const ENGINES: SearchEngine[] = [
 
 
 export type TypedMsg =
-{ type: 'getQueryStringFromPage', data: string } |
-{ type: 'getEnabledEnginesFromBg', data: SearchEngine[] }
+    { type: 'getQueryStringFromPage', data: string } |
+    { type: 'getEnabledEnginesFromBg', data: SearchEngine[] }
+// TODO: This is actually unnecessary... browser.storage can be access in content scripts
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage
 
 export function deepCopy<T>(x: T): T {
     return JSON.parse(JSON.stringify(x))
@@ -123,7 +125,7 @@ export class storageManager {
         return {
             enabledEngines: ["duckduckgo", "ecosia", "startpage", "bing", "google"],
             floatButton: {
-                enabled: false,
+                enabled: true,
             },
         }
     }
