@@ -52,7 +52,8 @@ async function setupFloatBar() {
     #ddgqFloatBar {
         --bg: #ffffff;
         --bgActive: #eeeeee;
-        --bd: #aaaaaa;
+        --fg: #333333;
+        --bd: #cccccc;
         display: flex;
         position: fixed;
         z-index: 99999999999;
@@ -60,12 +61,18 @@ async function setupFloatBar() {
         left: 0;
         height: ${HEIGHT}px;
         background: var(--bg);
+        border: 1px solid var(--bd);
     }
     #ddgqFloatBar a {
+        color: var(--fg);
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 2px 10px;
+        cursor: pointer;
+    }
+    #ddgqFloatBar a:hover {
+        background: var(--bgActive);
     }
     #ddgqFloatBar a .iconImg {
         width: ${HEIGHT-4}px;
@@ -82,10 +89,23 @@ async function setupFloatBar() {
     floatEl.id = 'ddgqFloatBar'
     const enabledEngines = await getEnabledEngines()
     const query = smartGetQueryString()
-    console.log('a===', enabledEngines)
+    const closeIconSvg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="12" viewBox="0 0 12 12">
+        <path fill="currentColor" fill-rule="nonzero" d="M7.426 6l4.285 4.284a1 1 0 0 1 0 1.415l-.012.012a1 1 0 0 1-1.415 0L6 7.426l-4.284 4.285a1 1 0 0 1-1.415 0l-.012-.012a1 1 0 0 1 0-1.415L4.574 6 .289 1.716A1 1 0 0 1 .29.3L.301.29a1 1 0 0 1 1.415 0L6 4.574 10.284.289a1 1 0 0 1 1.415 0l.012.012a1 1 0 0 1 0 1.415L7.426 6z"></path>
+    </svg>`
+    const closeBtn = document.createElement('a')
+    closeBtn.innerHTML = closeIconSvg
+    closeBtn.onclick = function () {
+        const el = document.querySelector('#ddgqFloatBar')
+        if (el) { el.remove() }
+    }
+
     floatEl.innerHTML = `
     ${enabledEngines.map(eng => genIconHtml(eng, query)).join('')}
     `
+    floatEl.prepend(closeBtn)
     document.body.appendChild(floatEl)
     document.body.appendChild(styleEl)
+
 }
+
