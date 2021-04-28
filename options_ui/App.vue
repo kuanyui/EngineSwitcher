@@ -24,7 +24,9 @@
       tbody
         tr(v-for='(en, index) in enabledEngineObjList' :key='en.id')
           td {{ index + 1 }}
-          td {{ en.name }}
+          td
+            img.engine-logo(:src="en.iconUrl")
+            span {{ en.name }}
           td
             span.icon-button(@click='moveUp(index)') &#x25B2;
             span.icon-button(@click='moveDn(index)') &#x25BC;
@@ -125,5 +127,9 @@ tr:hover td {
 .icon-button {
     cursor: pointer;
     font-size: 24px;
+}
+.engine-logo {
+    height: 1rem;
+    margin-right: 0.5rem;
 }
 </style>
