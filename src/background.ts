@@ -8,7 +8,7 @@ browser.runtime.onMessage.addListener((_ev: any) => {
     }
 })
 
-const STORAGE: MyStorage = storageManager.getSyncDefault()
+const STORAGE: MyStorage = storageManager.getDefaultData()
 
 function getEnabledEngines (): SearchEngine[] {
     return ENGINES.filter(en => STORAGE.enabledEngines.includes(en.id))
@@ -80,11 +80,11 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
 
 // Storage
 console.log('[background] first time to get config from storage')
-storageManager.getSync().then((obj) => {
+storageManager.getData().then((obj) => {
     Object.assign(STORAGE, obj.enabledEngines)
 })
 
-storageManager.onSyncChanged((changes) => {
+storageManager.onDataChanged((changes) => {
     console.log('[background] storage changed!', changes)
     STORAGE.enabledEngines = changes.enabledEngines.newValue
 })

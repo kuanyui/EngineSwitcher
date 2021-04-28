@@ -25,7 +25,7 @@ function startpageGetQueryString(): string {
     return el.value
 }
 
-storageManager.getSync().then((cfg) => {
+storageManager.getData().then((cfg) => {
     if (cfg.floatButton.enabled) {
         window.setTimeout(() => setupFloatBar(), 200)
         window.setTimeout(() => setupFloatBar(), 800)

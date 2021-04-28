@@ -120,8 +120,18 @@ export function storageSetSync (d: Partial<MyStorage>): void {
     browser.storage.sync.set(d)
 }
 
-export class storageManager {
-    static getSyncDefault(): MyStorage {
+class StorageManager {
+    area: browser.storage.StorageArea
+    constructor() {
+        // Firefox for Android (90) doesn't support `sync` area yet,
+        // so write a fallback for it.
+        if (browser.storage.sync) {
+            this.area = browser.storage.sync
+        } else {
+            this.area = browser.storage.local
+        }
+    }
+    getDefaultData(): MyStorage {
         return {
             enabledEngines: ["duckduckgo", "ecosia", "startpage", "bing", "google"],
             floatButton: {
@@ -129,27 +139,28 @@ export class storageManager {
             },
         }
     }
-    static setSync(d: Partial<MyStorage>): void {
-        browser.storage.sync.set(deepCopy(d))
+    setData(d: Partial<MyStorage>): void {
+        this.area.set(deepCopy(d))
     }
-    static getSync (): Promise<MyStorage> {
-        return browser.storage.sync.get().then((_d) => {
+    getData (): Promise<MyStorage> {
+        return this.area.get().then((_d) => {
             const d = _d as unknown as MyStorage
             if (d.enabledEngines === undefined) {
                 // init data
-                storageManager.setSync(storageManager.getSyncDefault())
+                storageManager.setData(storageManager.getDefaultData())
             }
             return d
         }).catch((err) => {
-            console.error('Error when getting settings from browser.storage.sync:', err)
-            return storageManager.getSyncDefault()
+            console.error('Error when getting settings from browser.storage:', err)
+            return storageManager.getDefaultData()
         })
     }
-    static onSyncChanged(cb: (changes: browser.storage.ChangeDict) => void) {
+    onDataChanged(cb: (changes: browser.storage.ChangeDict) => void) {
         browser.storage.onChanged.addListener((changes, areaName) => {
-            if (areaName === 'sync') {
+            if (areaName === 'sync' || areaName === 'local') {
                 cb(changes)
             }
         })
     }
 }
+export const storageManager = new StorageManager()

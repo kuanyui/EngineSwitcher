@@ -44,7 +44,7 @@ export default Vue.extend({
         selectedEngine: null | SearchEngine
     } {
         return {
-            copiedModel: storageManager.getSyncDefault(),
+            copiedModel: storageManager.getDefaultData(),
             selectedEngine: null,
         }
     },
@@ -62,7 +62,7 @@ export default Vue.extend({
     methods: {
         save () {
             console.log('local storage saving => ', this.copiedModel)
-            storageManager.setSync(this.copiedModel)
+            storageManager.setData(this.copiedModel)
             console.log('local storage saved!!!')
         },
         addEngine () {
@@ -88,7 +88,7 @@ export default Vue.extend({
         }
     },
     mounted () {
-        storageManager.getSync().then((d) => {
+        storageManager.getData().then((d) => {
             this.copiedModel = d
             console.log('getSync =', d)
             this.$watch(
