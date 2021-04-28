@@ -94,10 +94,14 @@ export type TypedMsg =
 { type: 'getQueryStringFromPage', data: string } |
 { type: 'getEnabledEnginesFromBg', data: SearchEngine[] }
 
+export function deepCopy<T>(x: T): T {
+    return JSON.parse(JSON.stringify(x))
+}
+
 export function parseUrlToGetQuery(engine: SearchEngine, url: string): string {
     const urlObj = new URL(url)
     const params = new URLSearchParams(urlObj.search)
-    return params.get(engine.queryKey) || '[Error] cannot extract query string from URL'
+    return params.get(engine.queryKey) || ''
 }
 
 export function isUrlSupported (currentUrl: string): boolean {
@@ -123,8 +127,8 @@ export class storageManager {
             },
         }
     }
-    static setSync (d: Partial<MyStorage>): void {
-        browser.storage.sync.set(d)
+    static setSync(d: Partial<MyStorage>): void {
+        browser.storage.sync.set(deepCopy(d))
     }
     static getSync (): Promise<MyStorage> {
         return browser.storage.sync.get().then((_d) => {

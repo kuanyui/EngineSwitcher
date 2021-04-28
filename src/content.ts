@@ -25,7 +25,9 @@ function startpageGetQueryString(): string {
     return el.value
 }
 
+window.setTimeout(() => setupFloatBar(), 200)
 window.setTimeout(() => setupFloatBar(), 800)
+window.setTimeout(() => setupFloatBar(), 1600)
 
 function genIconHtml(engine: SearchEngine, query: string): string {
     const kls = engine.hostname === location.hostname ? 'active' : ''

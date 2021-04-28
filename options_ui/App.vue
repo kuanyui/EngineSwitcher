@@ -61,6 +61,7 @@ export default Vue.extend({
     },
     methods: {
         save () {
+            console.log('local storage saving => ', this.copiedModel)
             storageManager.setSync(this.copiedModel)
             console.log('local storage saved!!!')
         },
@@ -89,9 +90,13 @@ export default Vue.extend({
     mounted () {
         storageManager.getSync().then((d) => {
             this.copiedModel = d
+            console.log('getSync =', d)
             this.$watch(
                 () => this.copiedModel,
-                (nv) => { this.save() },
+                (nv) => {
+                    this.save()
+                    console.log('save!!!!')
+                },
                 { deep: true })
         })
     },
