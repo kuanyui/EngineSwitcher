@@ -1,4 +1,4 @@
-import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, getEngineObjOfUrl, storageManager, search_engine_t } from "./common";
+import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, getEngineObjOfUrl, storageManager, search_engine_t, parseUrlToGetQuery } from "./common";
 
 browser.runtime.onMessage.addListener((_ev: any) => {
     const ev = _ev as TypedMsg
@@ -40,10 +40,8 @@ async function getCurrentState (tabId: number, currentUrl?: string): Promise<Cur
             console.error('Encounter an unexpected error, please report. Sorry!')
         }
     } else {
-        const urlObj = new URL(currentUrl)
-        const params = new URLSearchParams(urlObj.search)
-        keyword = params.get(curEng.queryKey) || ''
-        console.log('keyword ===', urlObj)
+        keyword = parseUrlToGetQuery(curEng, currentUrl)
+        console.log('keyword ===', keyword)
     }
     const nextEng = engines[(curIdx + 1) % engines.length]
     return {
@@ -59,7 +57,7 @@ async function goToNextEngine (tab: browser.tabs.Tab) {
     const state = await getCurrentState(tab.id, tab.url)
     if (!state) {return}
     browser.tabs.update(tab.id, {
-        url: state.nextEngine.queryUrl.replace(/{}/, state.keyword)
+        url: state.nextEngine.queryUrl.replace(/{}/, encodeURI(state.keyword))
     })
 }
 

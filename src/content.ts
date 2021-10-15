@@ -33,10 +33,11 @@ storageManager.getData().then((cfg) => {
     }
 })
 
-    function genIconHtml(engine: SearchEngine, query: string): string {
+function genIconHtml(engine: SearchEngine, query: string): string {
     const kls = engine.hostname === location.hostname ? 'active' : ''
+    const href = engine.queryUrl.replace(/{}/, encodeURI(query))
     return `
-    <a href="${engine.queryUrl.replace(/{}/, query)}" class="${kls}">
+    <a href="${href}" class="${kls}">
         <img class="iconImg" src="${engine.iconUrl}">
     </a>
     `
