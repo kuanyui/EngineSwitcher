@@ -56,7 +56,7 @@ export const ENGINES: SearchEngine[] = [
         name: 'StartPage',
         hostname: 'startpage.com',
         queryKey: 'query',
-        queryUrl: 'https://www.startpage.com/search?q={}',
+        queryUrl: 'https://www.startpage.com/sp/search?query={}',
         queryNeedContentScript: true,
         iconUrl: browser.runtime.getURL('img/engines/startpage.svg'),
     },
