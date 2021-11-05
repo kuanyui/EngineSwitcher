@@ -29,6 +29,8 @@
                 "*://duckduckgo.com/*",
                 "*://*.ecosia.org/*",
                 "*://*.bing.com/*",
+                "*://yandex.ru/*",
+                "*://yandex.com/*",
                 "*://www.google.com/*",
                 "*://en.wikipedia.org/*"
             ],

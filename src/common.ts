@@ -1,4 +1,4 @@
-export type search_engine_t = 'duckduckgo' | 'ecosia' | 'startpage' | 'bing' | 'google' | 'enwiki'
+export type search_engine_t = 'duckduckgo' | 'ecosia' | 'startpage' | 'bing' | 'google' | 'yandex-en' | 'yandex-ru' | 'enwiki'
 export interface SearchEngine {
     /** duckduckgo */
     id: search_engine_t,
@@ -79,6 +79,24 @@ export const ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/google.svg'),
     },
     {
+        id: 'yandex-en',
+        name: 'Yandex',
+        hostname: 'yandex.com',
+        queryKey: 'text',
+        queryUrl: 'https://yandex.com/search/?text={}',  // https://yandex.ru/search/?text={}
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/yandex-en.svg'),
+    },
+    {
+        id: 'yandex-ru',
+        name: 'Яндекс',
+        hostname: 'yandex.ru',
+        queryKey: 'text',
+        queryUrl: 'https://yandex.ru/search/?text={}',  // https://yandex.ru/search/?text={}
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/yandex-ru.svg'),
+    },
+    {
         id: 'enwiki',
         name: 'English Wikipedia (Not recommended)',
         hostname: 'en.wikipedia.org',
@@ -133,7 +151,7 @@ class StorageManager {
     }
     getDefaultData(): MyStorage {
         return {
-            enabledEngines: ["duckduckgo", "ecosia", "startpage", "bing", "google"],
+            enabledEngines: ["duckduckgo", "ecosia", "startpage", "bing", "yandex-en", "google"],
             floatButton: {
                 enabled: true,
             },
