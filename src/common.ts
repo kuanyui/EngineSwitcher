@@ -107,6 +107,9 @@ export const ALL_ENGINES: SearchEngine[] = [
     },
 ]
 
+export function objectAssign<N, T extends N>(target: T, newVal: N): T {
+    return Object.assign(target, newVal)
+}
 
 export type TypedMsg =
     { type: 'getQueryStringFromPage', data: string } |
@@ -165,6 +168,7 @@ class StorageManager {
             const d = _d as unknown as MyStorage
             // Too lazy to do migration ....
             if (
+                !d ||
                 d.enabledEngines === undefined ||
                 d.floatButton === undefined ||
                 d.floatButton.enabled === undefined

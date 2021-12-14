@@ -1,4 +1,19 @@
-import { MyStorage, SearchEngine, CurrentState, ALL_ENGINES, isUrlSupported, TypedMsg, getEngineObjOfUrl, storageManager, search_engine_t, parseUrlToGetQuery } from "./common";
+import { MyStorage, SearchEngine, CurrentState, ALL_ENGINES, isUrlSupported, TypedMsg, getEngineObjOfUrl, storageManager, search_engine_t, parseUrlToGetQuery, objectAssign } from "./common";
+// =======================================
+// Storage
+// =======================================
+const STORAGE: MyStorage = storageManager.getDefaultData()
+
+storageManager.getData().then((obj) => {
+    console.log('[EngineSwitcher][background] first time (since current firefox instance startup) to get config from storage', obj)
+    objectAssign(STORAGE, obj)
+})
+storageManager.onDataChanged((changes) => {
+    console.log('[EngineSwitcher][background] storage changed!', changes)
+    STORAGE.enabledEngines = changes.enabledEngines.newValue
+    STORAGE.floatButton = changes.floatButton.newValue
+})
+
 
 browser.runtime.onMessage.addListener((_ev: any) => {
     const ev = _ev as TypedMsg
@@ -8,7 +23,6 @@ browser.runtime.onMessage.addListener((_ev: any) => {
     }
 })
 
-const STORAGE: MyStorage = storageManager.getDefaultData()
 
 function getEnabledEngines(): SearchEngine[] {
     const fin: SearchEngine[] = []
@@ -83,13 +97,3 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
     }
 });
 
-// Storage
-console.log('[background] first time to get config from storage')
-storageManager.getData().then((obj) => {
-    Object.assign(STORAGE, obj.enabledEngines)
-})
-
-storageManager.onDataChanged((changes) => {
-    console.log('[background] storage changed!', changes)
-    STORAGE.enabledEngines = changes.enabledEngines.newValue
-})
