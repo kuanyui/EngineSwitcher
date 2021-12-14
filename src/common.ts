@@ -32,7 +32,7 @@ export interface MyStorage {
     }
 }
 
-export const ENGINES: SearchEngine[] = [
+export const ALL_ENGINES: SearchEngine[] = [
     {
         id: 'duckduckgo',
         name: 'DuckDuckGo',
@@ -126,12 +126,12 @@ export function parseUrlToGetQuery(engine: SearchEngine, url: string): string {
 
 export function isUrlSupported (currentUrl: string): boolean {
     const urlObj = new URL(currentUrl + '')
-    return ENGINES.some(eng => urlObj.hostname.includes(eng.hostname))
+    return ALL_ENGINES.some(eng => urlObj.hostname.includes(eng.hostname))
 }
 
 export function getEngineObjOfUrl (currentUrl: string): SearchEngine | undefined {
     const urlObj = new URL(currentUrl + '')
-    return ENGINES.find(eng => urlObj.hostname.includes(eng.hostname))
+    return ALL_ENGINES.find(eng => urlObj.hostname.includes(eng.hostname))
 }
 
 export function storageSetSync (d: Partial<MyStorage>): void {

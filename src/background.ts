@@ -1,4 +1,4 @@
-import { MyStorage, SearchEngine, CurrentState, ENGINES, isUrlSupported, TypedMsg, getEngineObjOfUrl, storageManager, search_engine_t, parseUrlToGetQuery } from "./common";
+import { MyStorage, SearchEngine, CurrentState, ALL_ENGINES, isUrlSupported, TypedMsg, getEngineObjOfUrl, storageManager, search_engine_t, parseUrlToGetQuery } from "./common";
 
 browser.runtime.onMessage.addListener((_ev: any) => {
     const ev = _ev as TypedMsg
@@ -10,8 +10,15 @@ browser.runtime.onMessage.addListener((_ev: any) => {
 
 const STORAGE: MyStorage = storageManager.getDefaultData()
 
-function getEnabledEngines (): SearchEngine[] {
-    return ENGINES.filter(en => STORAGE.enabledEngines.includes(en.id))
+function getEnabledEngines(): SearchEngine[] {
+    const fin: SearchEngine[] = []
+    for (const engineId of STORAGE.enabledEngines) {
+        const engine = ALL_ENGINES.find(x => x.id === engineId)
+        if (engine) {
+            fin.push(engine)
+        }
+    }
+    return fin
 }
 
 

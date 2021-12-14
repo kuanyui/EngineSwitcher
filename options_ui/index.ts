@@ -1,6 +1,6 @@
-import Vue from 'vue' 
+import Vue from 'vue'
 import App from './App.vue'
-import { ENGINES } from '../src/common';
+import { ALL_ENGINES } from '../src/common';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 new Vue({

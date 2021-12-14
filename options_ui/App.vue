@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ENGINES, SearchEngine, storageManager, search_engine_t, MyStorage } from '../src/common';
+import { ALL_ENGINES, SearchEngine, storageManager, search_engine_t, MyStorage } from '../src/common';
 export default Vue.extend({
     data (): {
         copiedModel: MyStorage,
@@ -53,12 +53,12 @@ export default Vue.extend({
     computed: {
         enabledEngineObjList (): SearchEngine[] {
             return this.copiedModel.enabledEngines.map((id): SearchEngine => {
-                const en = ENGINES.find(e => e.id === id)
+                const en = ALL_ENGINES.find(e => e.id === id)
                 return en as SearchEngine
             })
         },
         disabledEngines (): SearchEngine[] {
-            return ENGINES.filter(x => !this.copiedModel.enabledEngines.includes(x.id))
+            return ALL_ENGINES.filter(x => !this.copiedModel.enabledEngines.includes(x.id))
         }
     },
     methods: {
