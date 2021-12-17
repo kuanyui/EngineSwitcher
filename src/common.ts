@@ -1,4 +1,15 @@
-export type search_engine_t = 'duckduckgo' | 'ecosia' | 'startpage' | 'bing' | 'google' | 'yandex-en' | 'yandex-ru' | 'enwiki'
+export type search_engine_t =
+    'duckduckgo' |
+    'ecosia' |
+    'startpage' |
+    'bing' |
+    'google' |
+    'yandex-en' |
+    'yandex-ru' |
+    'goo' |
+    'yahoo-us' |
+    'yahoo-jp' |
+    'enwiki'
 export interface SearchEngine {
     /** duckduckgo */
     id: search_engine_t,
@@ -97,6 +108,33 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/yandex-ru.svg'),
     },
     {
+        id: 'yahoo-us',
+        name: 'Yahoo!',
+        hostname: 'search.yahoo.com',
+        queryKey: 'p',
+        queryUrl: 'https://search.yahoo.com/search?p={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/yahoo-us.svg'),
+    },
+    {
+        id: 'yahoo-jp',
+        name: 'Yahoo! JAPAN',
+        hostname: 'search.yahoo.co.jp',
+        queryKey: 'p',
+        queryUrl: 'https://search.yahoo.co.jp/search?p={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/yahoo-jp.svg'),
+    },
+    {
+        id: 'goo',
+        name: 'goo',
+        hostname: 'search.goo.ne.jp',
+        queryKey: 'MT',
+        queryUrl: 'https://search.goo.ne.jp/web.jsp?MT={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/goo.svg'),
+    },
+    {
         id: 'enwiki',
         name: 'English Wikipedia (Not recommended)',
         hostname: 'en.wikipedia.org',
@@ -153,8 +191,21 @@ class StorageManager {
         }
     }
     getDefaultData(): MyStorage {
+        let enabledEngines: search_engine_t[] = ["duckduckgo", "ecosia", "startpage"]
+        if (navigator.languages.includes('ja-JP') || navigator.languages.includes('zh-TW')) {
+            enabledEngines = enabledEngines.concat(["goo", "yahoo-jp"])
+        } else if (navigator.languages.some(x=>x.startsWith('ru-'))) {
+            enabledEngines = enabledEngines.concat(["yandex-ru"])
+        }
+        if (!enabledEngines.includes("yandex-ru")) {
+            enabledEngines.push("yandex-en")
+        }
+        if (!enabledEngines.includes("yahoo-jp")) {
+            enabledEngines.push("yahoo-us")
+        }
+        enabledEngines = enabledEngines.concat(["bing", "google"])
         return {
-            enabledEngines: ["duckduckgo", "ecosia", "startpage", "bing", "yandex-en", "google"],
+            enabledEngines: enabledEngines,
             floatButton: {
                 enabled: true,
             },

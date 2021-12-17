@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg:svg
+   viewBox="0 0 256 256"
+   version="1.1"
+   id="svg58728"
+   sodipodi:docname="yahoo-jp.svg"
+   width="256"
+   height="256"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview58730"
+     pagecolor="#ffffff"
+     bordercolor="#111111"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     showgrid="false"
+     inkscape:lockguides="true"
+     inkscape:zoom="1.36375"
+     inkscape:cx="42.529789"
+     inkscape:cy="184.41797"
+     inkscape:window-width="1729"
+     inkscape:window-height="1011"
+     inkscape:window-x="1888"
+     inkscape:window-y="964"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg58728" />
+  <svg:defs
+     id="defs58720">
+    <svg:style
+       id="style58718">.a{fill:#fff;}.b{fill:red;}</svg:style>
+  </svg:defs>
+  <svg:title
+     id="title58722">yahoo</svg:title>
+  <svg:path
+     class="b"
+     d="m 179.30946,103.08689 c -5.3952,1.45436 -54.73394,39.68993 -57.86159,49.05725 -0.71935,3.23712 0,34.6544 0.78192,39.36152 3.25275,0.73498 26.69451,0.0938 30.99504,0.81319 l -0.51606,9.71136 c -4.22234,-0.32841 -34.01322,-0.23457 -51.01202,-0.23457 -8.64796,0 -36.421533,0.9383 -44.960027,0.70372 l 1.563826,-9.24222 c 4.691482,-0.34404 24.067289,0.86011 28.305271,-3.65936 2.111156,-2.25189 1.438712,-32.10535 0.734989,-37.15651 C 85.542412,147.04606 42.349516,92.906366 31.04305,84.039481 H 1.9402339 V 70.418548 H 100.05473 v 0.938296 h 0.3284 l -0.3284,2.298825 V 84.023841 H 70.467121 C 83.665823,103.25892 102.57249,126.60684 110.64183,137.7882 l 39.53354,-35.81162 h -23.4574 l -3.31531,-13.589669 h 86.01047 l -0.62554,0.969576 h 0.29713 l -6.13019,8.929464 h -0.20329 l -2.47085,3.659339 H 184.3919 c -2.04862,0.45351 -3.86266,0.86011 -5.08244,1.11032 z m 25.45909,87.01132 -9.86773,-3.84702 -10.74348,-5.11371 -6.25532,19.23508 8.58541,3.72189 9.19529,3.94086 z m 50.16758,-85.27548 c -3.36224,-1.25106 -33.18442,-14.465389 -36.93759,-16.592193 l -26.58505,81.318993 16.93624,7.20924 z m -19.51654,11.11881"
+     id="path58726"
+     style="stroke-width:0.999999" />
+  <svg:metadata
+     id="metadata58789">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>yahoo</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </svg:metadata>
+</svg:svg>

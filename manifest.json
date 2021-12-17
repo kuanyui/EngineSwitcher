@@ -32,6 +32,9 @@
                 "*://yandex.ru/*",
                 "*://yandex.com/*",
                 "*://www.google.com/*",
+                "*://search.yahoo.com/*",
+                "*://search.yahoo.co.jp/*",
+                "*://search.goo.ne.jp/*",
                 "*://en.wikipedia.org/*"
             ],
             "js": ["dist/content.js"]
