@@ -130,7 +130,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         name: 'goo',
         hostname: 'search.goo.ne.jp',
         queryKey: 'MT',
-        queryUrl: 'https://search.goo.ne.jp/web.jsp?MT={}',
+        queryUrl: 'https://search.goo.ne.jp/web.jsp?MT={}&IE=UTF-8&OE=UTF-8',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/goo.svg'),
     },
