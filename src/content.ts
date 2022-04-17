@@ -29,9 +29,7 @@ function startpageGetQueryString(engine: SearchEngine): string {
 
 storageManager.getData().then((cfg) => {
     if (cfg.floatButton.enabled) {
-        window.setTimeout(() => setupFloatBar(), 200)
-        window.setTimeout(() => setupFloatBar(), 800)
-        window.setTimeout(() => setupFloatBar(), 1600)
+        setupFloatBarAfterBodyReady()
     }
 })
 
@@ -124,3 +122,27 @@ async function setupFloatBar() {
 
 }
 
+function setupFloatBarAfterBodyReady() {
+    const debounceSetupFloatBar = makeDebounceFn(() => {
+        setupFloatBar()
+    }, 50)
+    const mutObserver = new MutationObserver((arr, observer) => {
+        for (let mut of arr) {
+            if (mut.type === 'childList') {
+                if (mut.target.nodeType === Node.ELEMENT_NODE) {
+                    const el = mut.target
+                    if (el.nodeName === 'BODY') {
+                        setupFloatBar()
+                        mutObserver.disconnect()
+                    }
+
+                }
+            }
+        }
+    })
+
+    mutObserver.observe(document, {
+        childList: true,
+        subtree: true,  // false (or omit) to observe only changes to the parent node
+    })
+}
