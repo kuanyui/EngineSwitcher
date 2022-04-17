@@ -31,7 +31,38 @@ storageManager.getData().then((cfg) => {
     if (cfg.floatButton.enabled) {
         setupFloatBarAfterBodyReady()
     }
+    ecosiaRemoveStupidAnnoyingNotificationBanner()
 })
+
+function makeDebounceFn(fn: () => any, delay: number): () => any {
+    let timeoutId = -1
+    return () => {
+        window.clearTimeout(timeoutId)
+        timeoutId = window.setTimeout(fn, delay)
+    }
+}
+
+function ecosiaRemoveStupidAnnoyingNotificationBanner() {
+    if (location.hostname !== 'www.ecosia.org') { return }
+    const deleteElement = makeDebounceFn(() => {
+        document.querySelectorAll('.notifications-banner').forEach(el => {
+            el.parentElement!.remove()
+        })
+    }, 50)
+    const mutObserver = new MutationObserver((arr, observer) => {
+        for (let mut of arr) {
+            if (mut.type === 'childList') {
+                deleteElement()
+                // if (mut.target.nodeType === Node.ELEMENT_NODE) { }
+            }
+        }
+    })
+
+    mutObserver.observe(document, {
+        childList: true,
+        subtree: true,  // false (or omit) to observe only changes to the parent node
+    })
+}
 
 function genIconHtml(engine: SearchEngine, query: string): string {
     const kls = engine.hostname === location.hostname ? 'active' : ''
