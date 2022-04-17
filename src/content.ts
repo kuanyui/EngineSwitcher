@@ -14,14 +14,16 @@ function smartGetQueryString (): string {
     const engine = getEngineObjOfUrl(document.location.href)
     if (!engine) { return 'ERROR: Not supported search engine' }
     switch (engine.id) {
-        case 'startpage': return startpageGetQueryString()
+        case 'startpage': return startpageGetQueryString(engine)
         default: return parseUrlToGetQuery(engine, document.location.href)
     }
 }
 
-function startpageGetQueryString(): string {
+function startpageGetQueryString(engine: SearchEngine): string {
+    // Startspage frequently suspect you are abusing them via bot.
+    // So when #q is not found on DOM, still try to get keyword from URL
     const el = document.querySelector("#q") as HTMLInputElement
-    if (!el) {return "ERROR: StartPage has changed its HTML structure, please open an issue on EngineSwitcher's Github"}
+    if (!el) { return parseUrlToGetQuery(engine, document.location.href) || "ERROR: StartPage has changed its HTML structure, please open an issue on EngineSwitcher's Github" }
     return el.value
 }
 
