@@ -37,9 +37,14 @@ export interface CurrentState {
 }
 
 export interface MyStorage {
+    apiLevel: 1,
     enabledEngines: search_engine_t[],
     floatButton: {
         enabled: boolean,
+    },
+    extra: {
+        /** Remove annoying and useless shitty notifications on top of page in Ecosia. */
+        ecosiaEliminateNotifications: boolean,
     }
 }
 
@@ -145,6 +150,10 @@ export const ALL_ENGINES: SearchEngine[] = [
     },
 ]
 
+export function getEngineById(engineId: search_engine_t): SearchEngine {
+    return ALL_ENGINES.find(x=>x.id === engineId)!
+}
+
 export function objectAssign<N, T extends N>(target: T, newVal: N): T {
     return Object.assign(target, newVal)
 }
@@ -205,11 +214,20 @@ class StorageManager {
         }
         enabledEngines = enabledEngines.concat(["bing", "google"])
         return {
+            apiLevel: 1,
             enabledEngines: enabledEngines,
             floatButton: {
                 enabled: true,
             },
+            extra: {
+                ecosiaEliminateNotifications: true,
+            }
         }
+    }
+    /** Set data object (can be partial) into LocalStorage. */
+    setDataPartially(d: Partial<MyStorage>): void {
+        console.log('[SET] TO STORAGE', deepCopy(d))
+        this.area.set(deepCopy(d))
     }
     setData(d: Partial<MyStorage>): void {
         this.area.set(deepCopy(d))
@@ -217,6 +235,7 @@ class StorageManager {
     getData (): Promise<MyStorage> {
         return this.area.get().then((_d) => {
             const d = _d as unknown as MyStorage
+            const defaultValue = storageManager.getDefaultData()
             // Too lazy to do migration ....
             if (
                 !d ||
@@ -224,11 +243,10 @@ class StorageManager {
                 d.floatButton === undefined ||
                 d.floatButton.enabled === undefined
             ) {
-                const defaultValue = storageManager.getDefaultData()
                 storageManager.setData(defaultValue)
                 return defaultValue
             }
-            return d
+            return Object.assign(defaultValue, d)
         }).catch((err) => {
             console.error('Error when getting settings from browser.storage:', err)
             return storageManager.getDefaultData()

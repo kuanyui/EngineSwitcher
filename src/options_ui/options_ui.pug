@@ -1,0 +1,154 @@
+//
+   Copyright (c) 2021-2022 ono ono (kuanyui)
+   All rights reserved.
+
+   This project is released under  Mozilla Public License, v. 2.0 (MPL-2.0). Each
+   file under this directory is licensed under MPL-2.0 by default, if the file
+   includes no license information.
+
+   If a copy of the MPL was not distributed with this file, You can obtain one at
+   https://mozilla.org/MPL/2.0/.
+
+   You may not remove or alter the substance of any license notices (including
+   copyright notices, patent notices, disclaimers of warranty, or limitations of
+   liability) contained within the Source Code Form of the Covered Software, except
+   that You may alter any license notices to the extent required to remedy known
+   factual inaccuracies. (Cited from MPL - 2.0, chapter 3.3)
+
+mixin checkbox(id)
+  div
+    label(for=id)
+      input(id=id type='checkbox')
+      block
+mixin tablerow_checkbox(id)
+  tr.row
+    td(colspan="100%")
+      label(for=id)
+        input(id=id type='checkbox')
+        block
+
+//-  {1: 'one', 2: 'two', 3: 'three'}
+mixin tablerow_select(id, optsObj={})
+  tr.row
+    td
+      label(for=id)
+      block
+    td
+      select(id=id type='checkbox')
+        each text, key in optsObj
+          option(value=key)= text
+
+mixin tablerow_1_column(id, label)
+  tr.row
+    td
+      label(for=id)= label
+      block
+
+mixin line_radio(radioGroupName, value)
+  div
+    label
+      input(type='radio' name=radioGroupName value=value)
+      block
+
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    link(rel="stylesheet" type="text/css" href="./options_ui_style/options_ui.css")
+  style.
+    .engineListEditor {
+      display: flex;
+      align-items: center;
+    }
+    .actionButtonContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 8px;
+    }
+    .actionButtonContainer button {
+      width: 100px;
+    }
+    .tableContainer {
+      height: 400px;
+      width: calc(100vw - 100px - 8 * 2px);
+      border: 1px solid #888;
+    }
+    .tableContainer table td {
+      height: 30px;
+    }
+    th.name, td.name {
+      width: 100%;  /* donno why this doesn't work */
+    }
+    th.orderNo, td.orderNo {
+      min-width: 10px;
+      width: 10px;   /* donno why this is needed */
+    }
+    h6 {
+      margin: 0 6px;
+    }
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: left;
+        width: 33%;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+        padding: 2px 12px;
+        vertical-align: middle;
+    }
+    tr:hover td {
+        background-color: rgba(120,120,120,0.2);
+        cursor: pointer;
+    }
+    tr.active td {
+      background-color: var(--blue-50);
+    }
+    .engineLogo {
+        height: 1rem;
+        margin-right: 0.5rem;
+    }
+  nav.navbar.navbar-light.bg-light
+    a.navbar-brand(href='https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/' target='_blank')
+      img.d-inline-block.align-top(src='../img/icon.svg', width='30', height='30', alt='')
+      span Engine Switcher
+  form
+    h2 Search Engines List
+    .engineListEditor
+      .tableContainer
+        h6 Available Engines
+        table.engineTable
+          thead
+            tr
+              th.name Name
+          tbody#disabledEngines
+      .actionButtonContainer
+        button.actBtn#enableEngine() ➕ Enable
+        button.actBtn#disableEngine() ❌ Disable
+        button.actBtn#moveTop() ⏫ Top
+        button.actBtn#moveUp() ⬆️ Up
+        button.actBtn#moveDown() ⬇️ Down
+        button.actBtn#moveBottom() ⏬ Bottom
+      .tableContainer
+        h6 Enabled Engines
+        table.engineTable
+          thead
+            tr
+              th.orderNo #
+              th.name Name
+          tbody#enabledEngines
+
+    h2 User Interface
+    +checkbox('floatButton_enabled'): span Use float buttons (Especially useful for mobile)
+
+    h2 Extra
+    h4 Ecosia
+    +checkbox('extra_ecosiaEliminateNotifications'): span Remove annoying notifications.
+
+
+    h2 Default Values
+    button(onclick="resetToDefaults()") Reset to Defaults
+    script(src='./options_ui.js')

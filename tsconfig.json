@@ -3,8 +3,7 @@
     "*",  // What? `includes` is not same as `include` ???
     "src/*.ts",
     "src/**/*.ts",
-    "options_ui/*.ts",
-    "options_ui/*.vue",
+    "src/options_ui/*.ts",
   ],
   "exclude": [
     "node_modules"
@@ -19,7 +18,8 @@
     "target": "esnext",
     "lib": [
       "esnext",
-      "dom"
+      "dom",
+      "dom.Iterable"
     ],
     "strict": true,
     "removeComments": true,
