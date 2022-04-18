@@ -31,7 +31,9 @@ storageManager.getData().then((cfg) => {
     if (cfg.floatButton.enabled) {
         setupFloatBarAfterBodyReady()
     }
-    ecosiaRemoveStupidAnnoyingNotificationBanner()
+    if (cfg.extra.ecosiaEliminateNotifications) {
+        ecosiaRemoveStupidAnnoyingNotificationBanner()
+    }
 })
 
 function makeDebounceFn(fn: () => any, delay: number): () => any {
@@ -43,6 +45,7 @@ function makeDebounceFn(fn: () => any, delay: number): () => any {
 }
 
 function ecosiaRemoveStupidAnnoyingNotificationBanner() {
+    console.log('ecosia hack!')
     if (location.hostname !== 'www.ecosia.org') { return }
     const deleteElement = makeDebounceFn(() => {
         document.querySelectorAll('.notifications-banner').forEach(el => {

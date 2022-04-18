@@ -56,6 +56,16 @@ html
     meta(charset='utf-8')
     link(rel="stylesheet" type="text/css" href="./options_ui_style/options_ui.css")
   style.
+    .navbar a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--in-content-page-color);
+    }
+    .navbar img {
+      margin-right: 8px;
+      filter: drop-shadow(0px 0px 3px #fff);
+    }
     .engineListEditor {
       display: flex;
       align-items: center;
@@ -111,8 +121,8 @@ html
         height: 1rem;
         margin-right: 0.5rem;
     }
-  nav.navbar.navbar-light.bg-light
-    a.navbar-brand(href='https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/' target='_blank')
+  nav.navbar
+    a(href='https://addons.mozilla.org/en-US/firefox/addon/engine-switcher/' target='_blank')
       img.d-inline-block.align-top(src='../img/icon.svg', width='30', height='30', alt='')
       span Engine Switcher
   form
@@ -126,12 +136,13 @@ html
               th.name Name
           tbody#disabledEngines
       .actionButtonContainer
-        button.actBtn#enableEngine() ➕ Enable
-        button.actBtn#disableEngine() ❌ Disable
-        button.actBtn#moveTop() ⏫ Top
-        button.actBtn#moveUp() ⬆️ Up
-        button.actBtn#moveDown() ⬇️ Down
-        button.actBtn#moveBottom() ⏬ Bottom
+        //- type="button" to avoid <form> submitting
+        button.actBtn#enableEngine(type="button") ➕ Enable
+        button.actBtn#disableEngine(type="button") ❌ Disable
+        button.actBtn#moveTop(type="button") ⏫ Top
+        button.actBtn#moveUp(type="button") ⬆️ Up
+        button.actBtn#moveDown(type="button") ⬇️ Down
+        button.actBtn#moveBottom(type="button") ⏬ Bottom
       .tableContainer
         h6 Enabled Engines
         table.engineTable
@@ -146,9 +157,9 @@ html
 
     h2 Extra
     h4 Ecosia
-    +checkbox('extra_ecosiaEliminateNotifications'): span Remove annoying notifications.
+    +checkbox('extra_ecosiaEliminateNotifications'): span Remove annoying notifications bar on page top side.
 
 
     h2 Default Values
-    button(onclick="resetToDefaults()") Reset to Defaults
+    button#resetToDefaultBtn(type="button") Reset to Defaults
     script(src='./options_ui.js')

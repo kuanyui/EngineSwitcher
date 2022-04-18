@@ -72,13 +72,18 @@ function qs<T extends HTMLElement>(query: string): NodeListOf<T> {
     return res as NodeListOf<T>
 }
 
+function swap<T>(arr: T[], i: number, j: number): void {
+    const tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
+}
 
 class OptionUIManager {
-    selectedId: search_engine_t | '' = ''
-    disabledTbody = q<HTMLTableSectionElement>('#disabledEngines')!
-    enabledTbody = q<HTMLTableSectionElement>('#enabledEngines')!
-    enabledArr: search_engine_t[] = []
-    btns = {
+    private selectedId: search_engine_t | '' = ''
+    private disabledTbody = q<HTMLTableSectionElement>('#disabledEngines')!
+    private enabledTbody = q<HTMLTableSectionElement>('#enabledEngines')!
+    private enabledArr: search_engine_t[] = []
+    private btns = {
         enableEngine: q<HTMLButtonElement>('#enableEngine'),
         disableEngine: q<HTMLButtonElement>('#disableEngine'),
         moveTop: q<HTMLButtonElement>('#moveTop'),
@@ -86,6 +91,7 @@ class OptionUIManager {
         moveDown: q<HTMLButtonElement>('#moveDown'),
         moveBottom: q<HTMLButtonElement>('#moveBottom'),
     }
+    public onchange: (newVal: search_engine_t[]) => any = (newVal: search_engine_t[]) => undefined
     constructor() {
         this.buildTable()
         this.buildButtons()
@@ -118,16 +124,23 @@ class OptionUIManager {
         }
     }
     private renderButtons() {
-        const tr = document.querySelector('tr.engineRow.active')
-        if (!tr) {
+        if (!this.selectedId) {
             qs<HTMLButtonElement>('.actBtn').forEach(x => x.setAttribute('disabled', 'true'))
-            console.log('renderButtons', tr)
         } else {
-            const engineId = tr.getAttribute('value') || ''
-            const enabled = this.enabledArr.includes(engineId as any)
-            if (enabled) {
+            const selectedIdIsEnabled = this.enabledArr.includes(this.selectedId as any)
+            if (selectedIdIsEnabled) {
                 qs<HTMLButtonElement>('.actBtn').forEach(x => x.removeAttribute('disabled'))
                 this.btns.enableEngine.setAttribute('disabled', 'true')
+                const i = this.enabledArr.indexOf(this.selectedId)
+                const isFirst = i === 0
+                const isLast = i === this.enabledArr.length - 1
+                if (isFirst) {
+                    this.btns.moveUp.setAttribute('disabled', 'true')
+                    this.btns.moveTop.setAttribute('disabled', 'true')
+                } else if (isLast) {
+                    this.btns.moveDown.setAttribute('disabled', 'true')
+                    this.btns.moveBottom.setAttribute('disabled', 'true')
+                }
             } else {
                 qs<HTMLButtonElement>('.actBtn').forEach(x => x.setAttribute('disabled', 'true'))
                 this.btns.enableEngine.removeAttribute('disabled')
@@ -136,14 +149,62 @@ class OptionUIManager {
     }
     private buildButtons() {
         this.btns.enableEngine.onclick = () => this.actEnableEngine()
+        this.btns.disableEngine.onclick = () => this.actDisableEngine()
+        this.btns.moveTop.onclick = () => this.actMoveTop()
+        this.btns.moveUp.onclick = () => this.actMoveUp()
+        this.btns.moveDown.onclick = () => this.actMoveDown()
+        this.btns.moveBottom.onclick = () => this.actMoveBottom()
+    }
+    private emitChanges() {
+        this.onchange(this.enabledArr)
     }
     private actEnableEngine() {
-        if (this.selectedId) {
-            this.enabledArr.push(this.selectedId)
-        }
+        console.log('[button] clicked on enableEngine')
+        if (!this.selectedId) { return }
+        this.enabledArr.push(this.selectedId)
         this.buildTable()
+        this.emitChanges()
+    }
+    private actDisableEngine() {
+        console.log('[button] clicked on enableEngine')
+        if (!this.selectedId) { return }
+        const i = this.enabledArr.indexOf(this.selectedId)
+        this.enabledArr.splice(i, 1)
+        this.buildTable()
+        this.emitChanges()
+    }
+    private actMoveTop () {
+        if (!this.selectedId) { return }
+        const i = this.enabledArr.indexOf(this.selectedId)
+        this.enabledArr.splice(i, 1)
+        this.enabledArr.unshift(this.selectedId)
+        this.buildTable()
+        this.emitChanges()
+    }
+    private actMoveUp () {
+        if (!this.selectedId) { return }
+        const i = this.enabledArr.indexOf(this.selectedId)
+        swap(this.enabledArr, i, i-1)
+        this.buildTable()
+        this.emitChanges()
+    }
+    private actMoveDown () {
+        if (!this.selectedId) { return }
+        const i = this.enabledArr.indexOf(this.selectedId)
+        swap(this.enabledArr, i, i+1)
+        this.buildTable()
+        this.emitChanges()
+    }
+    private actMoveBottom () {
+        if (!this.selectedId) { return }
+        const i = this.enabledArr.indexOf(this.selectedId)
+        this.enabledArr.splice(i, 1)
+        this.enabledArr.push(this.selectedId)
+        this.buildTable()
+        this.emitChanges()
     }
     private buildTable() {
+        console.log('buildTable()')
         this.disabledTbody.innerHTML = ''
         this.enabledTbody.innerHTML = ''
         for (const x of ALL_ENGINES) {
@@ -177,7 +238,11 @@ class OptionUIManager {
 }
 
 const oum = new OptionUIManager()
-
+oum.onchange = (newVal) => {
+    storageManager.setDataPartially({
+        enabledEngines: newVal
+    })
+}
 async function loadFromLocalStorage() {
     const d = await storageManager.getData()
     setCheckboxValue('floatButton_enabled', d.floatButton.enabled)
@@ -185,10 +250,25 @@ async function loadFromLocalStorage() {
     oum.setModel(d.enabledEngines)
 }
 
-async function resetToDefault() {
-    storageManager.setDataPartially(storageManager.getDefaultData())
+// NOTE: async function seems cannot be assign to <button onclick="...">... Donno why.
+async function resetToDefaults() {
+    console.log('click reset')
+    storageManager.setData(storageManager.getDefaultData())
+    const d = await storageManager.getData()
+    oum.setModel(d.enabledEngines)
     await loadFromLocalStorage()
 }
+
+function resetToDefaults1() {
+    console.log('click reset')
+    const d = storageManager.getDefaultData()
+    storageManager.setData(d)
+    oum.setModel(d.enabledEngines)
+    loadFromLocalStorage()
+}
+
+const resetBtn = q<HTMLButtonElement>('#resetToDefaultBtn')
+resetBtn.onclick = resetToDefaults1
 
 async function saveFormToLocalStorage() {
     storageManager.setDataPartially({
