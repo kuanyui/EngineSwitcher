@@ -220,7 +220,7 @@ class StorageManager {
                 enabled: true,
             },
             extra: {
-                ecosiaEliminateNotifications: true,
+                ecosiaEliminateNotifications: false,
             }
         }
     }
