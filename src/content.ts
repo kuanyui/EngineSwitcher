@@ -47,16 +47,22 @@ function makeDebounceFn(fn: () => any, delay: number): () => any {
 function ecosiaRemoveStupidAnnoyingNotificationBanner() {
     console.log('ecosia hack!')
     if (location.hostname !== 'www.ecosia.org') { return }
+    const styleEl = document.createElement('style')
+    // Donno why there are two possible CSS classes to contain this shitty notification banner...
+    styleEl.innerText = `
+      .main-header .banner { display: none !important; }
+      .js-notifications-banner { display: none !important; }
+    `
+    document.body.append(styleEl)
+    /*
     const deleteElement = makeDebounceFn(() => {
-        document.querySelectorAll('.notifications-banner').forEach(el => {
-            el.parentElement!.remove()
-        })
+        document.querySelectorAll('.main-header .banner').forEach(el => { el.remove() })
+        document.querySelectorAll('.js-notifications-banner').forEach(x => x.remove())
     }, 50)
     const mutObserver = new MutationObserver((arr, observer) => {
         for (let mut of arr) {
             if (mut.type === 'childList') {
                 deleteElement()
-                // if (mut.target.nodeType === Node.ELEMENT_NODE) { }
             }
         }
     })
@@ -65,6 +71,7 @@ function ecosiaRemoveStupidAnnoyingNotificationBanner() {
         childList: true,
         subtree: true,  // false (or omit) to observe only changes to the parent node
     })
+    */
 }
 
 function genIconHtml(engine: SearchEngine, query: string): string {
