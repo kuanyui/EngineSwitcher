@@ -1,4 +1,4 @@
-* Privacy Search Engine Switcher
+* Engine Switcher
 A WebExtension to switch current page between various search engines in just one click (or =Ctrl+Alt+N=), if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
 
 So you can easily keep your privacy as possible as you can.
@@ -10,15 +10,21 @@ Currently supported search engines:
 - StartPage
 - Bing
 - Google
+- Goo
+- Yahoo! JAPAN
+- Yahoo!
+- Yandex (en / ru)
 - Wikipedia English (Experimental)
 
 For more information please see [[https://github.com/kuanyui/EngineSwitcher][GitHub]].
 
 * Install
-- [[https://addons.mozilla.org/en-US/firefox/addon/privacy-search-engine-switcher/][Mozilla Add-ons]]
+- [[https://addons.mozilla.org/en-US/firefox/addon/engine-switcher/][Mozilla Add-ons]]
 
 * Screenshot
-[[https://addons.cdn.mozilla.net/user-media/previews/full/214/214819.png]]
+# [[https://addons.cdn.mozilla.net/user-media/previews/full/214/214819.png]]
+[[https://addons.mozilla.org/user-media/previews/full/255/255792.png]]
+[[https://addons.mozilla.org/user-media/previews/full/268/268679.png]]
 
 * Supported Browser
 - Firefox for Desktop >= 61
