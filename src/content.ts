@@ -46,14 +46,32 @@ function makeDebounceFn(fn: () => any, delay: number): () => any {
 
 function ecosiaRemoveStupidAnnoyingNotificationBanner() {
     console.log('ecosia hack!')
-    const styleEl = document.createElement('style')
-    // Donno why there are two possible CSS classes to contain this shitty notification banner...
-    styleEl.innerText = `
-      .main-header .banner { display: none !important; }
-      .js-notifications-banner { display: none !important; }
-    `
-    styleEl.className='engineSwitcherEcosiaHack'
-    document.body.append(styleEl)
+    const mutObserver = new MutationObserver((arr, observer) => {
+        const body = arr.find(mut =>
+            mut.type === 'childList' &&
+            mut.target.nodeType === Node.ELEMENT_NODE &&
+            mut.target.nodeName === 'BODY'
+        )
+        if (body) {
+            const styleEl = document.createElement('style')
+            // Donno why there are two possible CSS classes to contain this shitty notification banner...
+            styleEl.innerText = `
+              .main-header .banner { display: none !important; }
+              .js-notifications-banner { display: none !important; }
+            `
+            styleEl.className='engineSwitcherEcosiaHack'
+            document.body.append(styleEl)
+
+            mutObserver.disconnect()
+            return  // Remember to do this...
+        }
+    })
+    mutObserver.observe(document, {
+        childList: true,
+        subtree: true,  // false (or omit) to observe only changes to the parent node
+    })
+
+
     /*
     const deleteElement = makeDebounceFn(() => {
         document.querySelectorAll('.main-header .banner').forEach(el => { el.remove() })
@@ -171,18 +189,15 @@ function setupFloatBarAfterBodyReady() {
         setupFloatBar()
     }, 50)
     const mutObserver = new MutationObserver((arr, observer) => {
-        for (let mut of arr) {
-            if (mut.type === 'childList') {
-                if (mut.target.nodeType === Node.ELEMENT_NODE) {
-                    const el = mut.target
-                    if (el.nodeName === 'BODY') {
-                        setupFloatBar()
-                        mutObserver.disconnect()
-                        return  // Remember to do this...
-                    }
-
-                }
-            }
+        const body = arr.find(mut =>
+            mut.type === 'childList' &&
+            mut.target.nodeType === Node.ELEMENT_NODE &&
+            mut.target.nodeName === 'BODY'
+        )
+        if (body) {
+            setupFloatBar()
+            mutObserver.disconnect()
+            return  // Remember to do this...
         }
     })
 
