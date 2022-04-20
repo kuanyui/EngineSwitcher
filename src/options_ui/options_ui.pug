@@ -55,6 +55,7 @@ html
   head
     meta(charset='utf-8')
     link(rel="stylesheet" type="text/css" href="./options_ui_style/options_ui.css")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
   style.
     .navbar a {
       display: flex;
@@ -64,7 +65,11 @@ html
     }
     .navbar img {
       margin-right: 8px;
-      filter: drop-shadow(0px 0px 3px #fff);
+      filter:
+        drop-shadow(1px 0px 0px #ffffff)
+        drop-shadow(-1px 0px 0px #ffffff)
+        drop-shadow(0px 1px 0px #ffffff)
+        drop-shadow(0px -1px 0px #ffffff);
     }
     .engineListEditor {
       display: flex;
@@ -80,6 +85,10 @@ html
     .actionButtonContainer button {
       width: 100px;
     }
+    .actionButtonContainer button .emoji {
+      display: inline;
+      text-shadow: 1px 0px 0px #ffffff, -1px 0px 0px #ffffff, 0px 1px 0px #ffffff, 0px -1px 0px #ffffff;
+    }
     .tableContainer {
       height: 400px;
       width: calc(100vw - 100px - 8 * 2px);
@@ -94,6 +103,14 @@ html
     th.orderNo, td.orderNo {
       min-width: 10px;
       width: 10px;   /* donno why this is needed */
+    }
+    .engineTable .name img {
+      filter:
+        drop-shadow(1px 0px 0px #ffffff)
+        drop-shadow(-1px 0px 0px #ffffff)
+        drop-shadow(0px 1px 0px #ffffff)
+        drop-shadow(0px -1px 0px #ffffff);
+
     }
     h6 {
       margin: 0 6px;
@@ -138,12 +155,12 @@ html
           tbody#disabledEngines
       .actionButtonContainer
         //- type="button" to avoid <form> submitting
-        button.actBtn#enableEngine(type="button") ➕ Enable
-        button.actBtn#disableEngine(type="button") ❌ Disable
-        button.actBtn#moveTop(type="button") ⏫ Top
-        button.actBtn#moveUp(type="button") ⬆️ Up
-        button.actBtn#moveDown(type="button") ⬇️ Down
-        button.actBtn#moveBottom(type="button") ⏬ Bottom
+        button.actBtn#enableEngine(type="button") #[.emoji ➕] Enable
+        button.actBtn#disableEngine(type="button") #[.emoji ❌] Disable
+        button.actBtn#moveTop(type="button") #[.emoji ⏫] Top
+        button.actBtn#moveUp(type="button") #[.emoji ⬆️] Up
+        button.actBtn#moveDown(type="button") #[.emoji ⬇️] Down
+        button.actBtn#moveBottom(type="button") #[.emoji ⏬] Bottom
       .tableContainer
         h6 Enabled Engines
         table.engineTable
