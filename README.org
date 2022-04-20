@@ -22,9 +22,8 @@ For more information please see [[https://github.com/kuanyui/EngineSwitcher][Git
 - [[https://addons.mozilla.org/en-US/firefox/addon/engine-switcher/][Mozilla Add-ons]]
 
 * Screenshot
-# [[https://addons.cdn.mozilla.net/user-media/previews/full/214/214819.png]]
-[[https://addons.mozilla.org/user-media/previews/full/255/255792.png]]
-[[https://addons.mozilla.org/user-media/previews/full/268/268679.png]]
+[[https://addons.mozilla.org/user-media/previews/full/268/268699.png]]
+[[https://addons.mozilla.org/user-media/previews/full/268/268700.png]]
 
 * Supported Browser
 - Firefox for Desktop >= 61
