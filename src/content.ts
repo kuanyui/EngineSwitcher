@@ -46,7 +46,6 @@ function makeDebounceFn(fn: () => any, delay: number): () => any {
 
 function ecosiaRemoveStupidAnnoyingNotificationBanner() {
     console.log('ecosia hack!')
-    if (location.hostname !== 'www.ecosia.org') { return }
     const styleEl = document.createElement('style')
     // Donno why there are two possible CSS classes to contain this shitty notification banner...
     styleEl.innerText = `
