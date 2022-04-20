@@ -93,16 +93,18 @@ async function getEnabledEngines(): Promise<SearchEngine[]> {
 }
 
 function removeFloatBar() {
-    const el = document.querySelector('#ddgqFloatBar')
+    document.querySelectorAll('.engineSwitcherElem').forEach(x => x.remove() )
+    const el = document.querySelector('#engineSwitcherBar')
     if (el) { el.remove() }
 }
 
 async function setupFloatBar() {
     removeFloatBar()
     const styleEl = document.createElement('style')
+    styleEl.className = "engineSwitcherElem"
     const ICON_SIZE = 40
     styleEl.innerText = `
-    #ddgqFloatBar {
+    #engineSwitcherBar {
         --bg: #ffffff;
         --bgActive: #eeeeee;
         --fg: #333333;
@@ -115,7 +117,7 @@ async function setupFloatBar() {
         background: var(--bg);
         border: 1px solid var(--bd);
     }
-    #ddgqFloatBar a {
+    #engineSwitcherBar a {
         color: var(--fg);
         display: flex;
         align-items: center;
@@ -123,16 +125,16 @@ async function setupFloatBar() {
         cursor: pointer;
         padding: 2px 10px;
     }
-    #ddgqFloatBar a.closeBtn {
+    #engineSwitcherBar a.closeBtn {
         padding: 0;
     }
-    #ddgqFloatBar a:hover {
+    #engineSwitcherBar a:hover {
         background: var(--bgActive);
     }
-    #ddgqFloatBar a .iconImg {
+    #engineSwitcherBar a .iconImg {
         width: ${ICON_SIZE}px;
     }
-    #ddgqFloatBar a.active {
+    #engineSwitcherBar a.active {
         background: var(--bgActive);
         filter: brightness(0.9) saturate(0.6);
     }
@@ -141,7 +143,8 @@ async function setupFloatBar() {
     }
     `
     const floatEl = document.createElement('div')
-    floatEl.id = 'ddgqFloatBar'
+    floatEl.id = 'engineSwitcherBar'
+    floatEl.className = "engineSwitcherElem"
     const enabledEngines = await getEnabledEngines()
     const query = smartGetQueryString()
     const closeIconSvg = `
@@ -174,6 +177,7 @@ function setupFloatBarAfterBodyReady() {
                     if (el.nodeName === 'BODY') {
                         setupFloatBar()
                         mutObserver.disconnect()
+                        return  // Remember to do this...
                     }
 
                 }
