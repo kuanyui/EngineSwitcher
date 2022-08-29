@@ -1,6 +1,7 @@
 export type search_engine_t =
     'duckduckgo' |
     'ecosia' |
+    'brave' |
     'startpage' |
     'bing' |
     'google' |
@@ -10,6 +11,11 @@ export type search_engine_t =
     'yahoo-us' |
     'yahoo-jp' |
     'enwiki'
+export type search_result_source_t =
+    '__own__' |
+    'google' |
+    'bing' |
+    'yandex'
 export interface SearchEngine {
     /** duckduckgo */
     id: search_engine_t,
@@ -28,6 +34,21 @@ export interface SearchEngine {
     /** Need to get query string via content.js */
     queryNeedContentScript: boolean,
     iconUrl: string,
+    privacyInfo: PrivacyInfo
+}
+
+export interface PrivacyInfo {
+    jurisdiction: string
+    resultsSources: search_result_source_t[]
+    collectData: CollectData
+}
+export enum CollectData {
+    /** Officially claimed "yes" */
+    Yes,
+    /** Officially claimed "no", and not suspicious so far. */
+    No,
+    /** Officially maybe claimed "no", but suspicious (e.g. owned by ad-tech). */
+    Unknown,
 }
 
 export interface CurrentState {
@@ -57,6 +78,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://duckduckgo.com/?q={}',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/duckduckgo.svg'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'US',
+            resultsSources: ['__own__', 'bing'],
+        }
     },
     {
         id: 'ecosia',
@@ -66,6 +92,25 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.ecosia.org/search?q={}',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/ecosia.svg'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'DE',
+            resultsSources: ['bing']
+        }
+    },
+    {
+        id: 'brave',
+        name: 'Brave',
+        hostname: 'search.brave.com',
+        queryKey: 'q',
+        queryUrl: 'https://search.brave.com/search?q={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/brave.svg'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'US',
+            resultsSources: ['__own__']
+        }
     },
     {
         id: 'startpage',
@@ -75,6 +120,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.startpage.com/sp/search?query={}',
         queryNeedContentScript: true,
         iconUrl: browser.runtime.getURL('img/engines/startpage.svg'),
+        privacyInfo: {
+            collectData: CollectData.Unknown,
+            jurisdiction: 'NL',
+            resultsSources: ['google']
+        }
     },
     {
         id: 'bing',
@@ -84,6 +134,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.bing.com/search?q={}',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/bing.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'US',
+            resultsSources: ['__own__']
+        }
     },
     {
         id: 'google',
@@ -93,6 +148,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://www.google.com/search?q={}',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/google.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'US',
+            resultsSources: ['__own__']
+        }
     },
     {
         id: 'yandex-en',
@@ -102,6 +162,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://yandex.com/search/?text={}',  // https://yandex.ru/search/?text={}
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/yandex-en.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'RU',
+            resultsSources: ['__own__']
+        }
     },
     {
         id: 'yandex-ru',
@@ -111,6 +176,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://yandex.ru/search/?text={}',  // https://yandex.ru/search/?text={}
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/yandex-ru.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'RU',
+            resultsSources: ['__own__']
+        }
     },
     {
         id: 'yahoo-us',
@@ -120,6 +190,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://search.yahoo.com/search?p={}',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/yahoo-us.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'US',
+            resultsSources: ['bing']
+        }
     },
     {
         id: 'yahoo-jp',
@@ -129,6 +204,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://search.yahoo.co.jp/search?p={}',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/yahoo-jp.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'JP',
+            resultsSources: ['__own__']
+        }
     },
     {
         id: 'goo',
@@ -138,6 +218,11 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://search.goo.ne.jp/web.jsp?MT={}&IE=UTF-8&OE=UTF-8',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/goo.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'JP',
+            resultsSources: ['__own__']
+        }
     },
     {
         id: 'enwiki',
@@ -147,8 +232,33 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryUrl: 'https://en.wikipedia.org/w/index.php?search={}&title=Special:Search&fulltext=1&ns0=1',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/wikipedia.svg'),
+        privacyInfo: {
+            collectData: CollectData.Yes,
+            jurisdiction: 'US',
+            resultsSources: ['__own__']
+        }
     },
 ]
+
+
+export function countryCodeEmoji(cc: string) {
+    // country code regex
+    const CC_REGEX = /^[a-z]{2}$/i;
+    // offset between uppercase ascii and regional indicator symbols
+    const OFFSET = 127397;
+    if (!CC_REGEX.test(cc)) {
+      const type = typeof cc;
+      throw new TypeError(
+        `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
+          type === 'string' ? cc : type
+        }' instead.`,
+      );
+    }
+
+    const codePoints = [...cc.toUpperCase()].map(c => c.codePointAt(0)! + OFFSET);
+    return String.fromCodePoint(...codePoints);
+  }
+
 
 export function getEngineById(engineId: search_engine_t): SearchEngine {
     return ALL_ENGINES.find(x=>x.id === engineId)!
@@ -200,7 +310,7 @@ class StorageManager {
         }
     }
     getDefaultData(): MyStorage {
-        let enabledEngines: search_engine_t[] = ["duckduckgo", "ecosia", "startpage"]
+        let enabledEngines: search_engine_t[] = ["duckduckgo", "ecosia", "brave"]
         if (navigator.languages.includes('ja-JP') || navigator.languages.includes('zh-TW')) {
             enabledEngines = enabledEngines.concat(["goo", "yahoo-jp"])
         } else if (navigator.languages.some(x=>x.startsWith('ru-'))) {
