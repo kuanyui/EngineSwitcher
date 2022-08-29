@@ -12,8 +12,9 @@
  * remedy known factual inaccuracies. (Cited from MPL - 2.0, chapter 3.3)
  */
 
-import { ALL_ENGINES, getEngineById, search_engine_t, storageManager } from "../common"
-
+import { ALL_ENGINES, countryCodeEmoji, fmtCollectDataAsPrivate, fmtResultSources, getEngineById, SearchEngine, search_engine_t, storageManager } from "../common"
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css'
 
 function getEl<T extends HTMLElement>(elementId: string): T {
     const el = document.getElementById(elementId)
@@ -203,12 +204,20 @@ class OptionUIManager {
         this.buildTable()
         this.emitChanges()
     }
+    private setupEngineTooltip(el: Element, engine: SearchEngine): void {
+        el.setAttribute('data-tippy-content', `
+        <b>Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
+        <b>Jurisdiction</b>: ${countryCodeEmoji(engine.privacyInfo.jurisdiction)}<br/>
+        <b>Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
+        `)
+    }
     private buildTable() {
         console.log('buildTable()')
         this.disabledTbody.innerHTML = ''
         this.enabledTbody.innerHTML = ''
         for (const x of ALL_ENGINES) {
             const tr = document.createElement('TR')
+            this.setupEngineTooltip(tr, x)
             tr.setAttribute("value", x.id)
             tr.classList.add('engineRow')
             if (!this.enabledArr.includes(x.id)) {
@@ -223,6 +232,7 @@ class OptionUIManager {
             const tr = document.createElement('TR')
             const engineId = this.enabledArr[i]
             const engine = getEngineById(engineId)
+            this.setupEngineTooltip(tr, engine)
             tr.setAttribute("value", engineId)
             tr.classList.add('engineRow')
             tr.innerHTML = `
@@ -233,6 +243,10 @@ class OptionUIManager {
             this.enabledTbody.appendChild(tr)
 
         }
+        tippy('[data-tippy-content]', {
+            allowHTML: true,
+            maxWidth: 500,
+        })
         this.rerender()
     }
 }

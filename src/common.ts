@@ -51,6 +51,24 @@ export enum CollectData {
     Unknown,
 }
 
+export function fmtCollectDataAsPrivate(x: CollectData): string {
+    switch (x) {
+        case CollectData.Yes: return `❌ No (explicitly track you)`
+        case CollectData.No: return `☑️ Yes (at least, officially, claimed that won't track you)`
+        case CollectData.Unknown: return `❓ Suspicious (e.g. owned by ad-tech)`
+    }
+}
+export function fmtResultSources(xs: search_result_source_t[]): string {
+    return xs.map(x => {
+        switch (x) {
+            case '__own__': return 'Own Crawler'
+            case 'google': return 'Google'
+            case 'bing': return 'Bing'
+            case 'yandex': return 'Yandex'
+        }
+    }).join(' + ')
+}
+
 export interface CurrentState {
     keyword: string,
     currentEngine: SearchEngine,
