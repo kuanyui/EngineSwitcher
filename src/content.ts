@@ -180,7 +180,7 @@ async function setupFloatBar() {
     `
     floatEl.prepend(closeBtn)
     document.body.appendChild(floatEl)
-    document.body.appendChild(styleEl)
+    document.head.appendChild(styleEl)
 
 }
 
