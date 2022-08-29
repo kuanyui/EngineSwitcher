@@ -29,6 +29,7 @@
                 "*://duckduckgo.com/*",
                 "*://*.ecosia.org/*",
                 "*://*.bing.com/*",
+                "*://search.brave.com/*",
                 "*://yandex.ru/*",
                 "*://yandex.com/*",
                 "*://www.google.com/*",
