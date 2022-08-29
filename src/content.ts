@@ -136,6 +136,12 @@ async function setupFloatBar() {
         background: var(--bg);
         border: 1px solid var(--bd);
     }
+    #engineSwitcherBar .scrollArea {
+        max-width: calc(100vw - 36px);
+        overflow-x: scroll;
+        display: flex;
+        width: 100%;
+    }
     #engineSwitcherBar a {
         color: var(--fg);
         display: flex;
@@ -145,7 +151,7 @@ async function setupFloatBar() {
         padding: 2px 10px;
     }
     #engineSwitcherBar a.closeBtn {
-        padding: 0;
+        width: 36px;
     }
     #engineSwitcherBar a:hover {
         background: var(--bgActive);
@@ -175,8 +181,9 @@ async function setupFloatBar() {
     closeBtn.className = 'closeBtn'
     closeBtn.onclick = function () { removeFloatBar() }
 
-    floatEl.innerHTML = `
+    floatEl.innerHTML = `<div class="scrollArea">
     ${enabledEngines.map(eng => genIconHtml(eng, query)).join('')}
+    </div>
     `
     floatEl.prepend(closeBtn)
     document.body.appendChild(floatEl)
