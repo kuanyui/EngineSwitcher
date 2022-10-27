@@ -7,14 +7,15 @@ Currently supported search engines:
 
 - DuckDuckGo
 - Ecosia
+- Brave
 - StartPage
 - Bing
 - Google
-- Goo
+- goo
 - Yahoo! JAPAN
 - Yahoo!
 - Yandex (en / ru)
-- Wikipedia English (Experimental)
+- Wikipedia English (Unrecommended)
 
 For more information please see [[https://github.com/kuanyui/EngineSwitcher][GitHub]].
 
