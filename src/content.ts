@@ -122,7 +122,7 @@ async function setupFloatBar() {
     const styleEl = document.createElement('style')
     styleEl.className = "engineSwitcherElem"
     const ICON_SIZE = 40
-    styleEl.innerText = `
+    styleEl.textContent = `
     #engineSwitcherBar {
         --bg: #ffffff;
         --bgActive: #eeeeee;
