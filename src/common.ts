@@ -283,6 +283,7 @@ export function getEngineById(engineId: search_engine_t): SearchEngine {
 }
 
 export function objectAssign<N, T extends N>(target: T, newVal: N): T {
+    // @ts-ignore
     return Object.assign(target, newVal)
 }
 
