@@ -36,11 +36,14 @@ storageManager.getData().then((cfg) => {
     }
 })
 
-function makeDebounceFn(fn: () => any, delay: number): () => any {
+function makeDebounceObject(fn: () => any, delay: number): {cancel: () => any, start: () => any} {
     let timeoutId = -1
-    return () => {
-        window.clearTimeout(timeoutId)
-        timeoutId = window.setTimeout(fn, delay)
+    return {
+        cancel: () => window.clearTimeout(timeoutId),
+        start: () => {
+            window.clearTimeout(timeoutId)
+            timeoutId = window.setTimeout(fn, delay)
+        }
     }
 }
 
@@ -192,10 +195,13 @@ async function setupFloatBar() {
 }
 
 function setupFloatBarAfterBodyReady() {
-    const debounceSetupFloatBar = makeDebounceFn(() => {
+    // FIXME: A debounce as workaround for incomprehensible behavior of DOM of Brave...
+    const debounceSetupFloatBar = makeDebounceObject(() => {
         setupFloatBar()
-    }, 50)
+    }, 1000)
+    debounceSetupFloatBar.start()
     const mutObserver = new MutationObserver((arr, observer) => {
+        // console.log('MUT===>', arr.map(m => m.target.nodeName))
         const body = arr.find(mut =>
             mut.type === 'childList' &&
             mut.target.nodeType === Node.ELEMENT_NODE &&
@@ -203,6 +209,7 @@ function setupFloatBarAfterBodyReady() {
         )
         if (body) {
             setupFloatBar()
+            debounceSetupFloatBar.cancel()
             mutObserver.disconnect()
             return  // Remember to do this...
         }
