@@ -239,7 +239,7 @@ export const ALL_ENGINES: SearchEngine[] = [
             jurisdiction: 'IE',
             resultsSources: ['__unknown__'],
             since: 2020,
-            summary: "Owned by Verizon Yahoo, claim that no cookie nor tracker are used. But the information provided by its official site is quite limited. Server seems located in Ireland according to Flagfox Geotool."
+            summary: "Owned by Verizon Yahoo!, claims that no cookie nor tracker are used. But the information provided by its official site is quite limited. Server seems located in Ireland according to Flagfox Geotool. <b>NOTICE THAT this OneSearch uses some unknown magic, which force all links opened with new tab, I don't know how to eliminate this effect currently; therefore, not recommended to use.</b>"
         }
     },
     {

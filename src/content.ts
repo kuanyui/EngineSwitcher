@@ -105,7 +105,7 @@ function genIconHtml(engine: SearchEngine, query: string): string {
     const kls = engine.hostname === location.hostname ? 'active' : ''
     const href = engine.queryUrl.replace(/{}/, encodeURI(query))
     return `
-    <a href="${href}" class="${kls}">
+    <a href="${href}" class="${kls}" target="_self">
         <img class="iconImg" src="${engine.iconUrl}">
     </a>
     `
@@ -125,6 +125,26 @@ function removeFloatBar() {
     const el = document.querySelector('#engineSwitcherBar')
     if (el) { el.remove() }
 }
+
+// function removeLinkElementTarget() {
+//     const barEl = document.querySelector('#engineSwitcherBar')
+//     if (!barEl) { return }
+//     const linkElArr = barEl.querySelectorAll('a')
+//     linkElArr.forEach((el) => el.setAttribute('target', '_self'))
+// }
+
+// /** In Yahoo OneSearch, all <a> will be added with a target="_blank" via unknown mechanism, so remove it with a mutation. */
+// function watchAndRemoveLinkElementTarget() {
+//     const mutObserver = new MutationObserver((arr, observer) => {
+//         removeLinkElementTarget()
+//     })
+//     mutObserver.observe(document, {
+//         childList: true,
+//         attributes: true,
+//         subtree: true,  // false (or omit) to observe only changes to the parent node
+//     })
+// }
+// watchAndRemoveLinkElementTarget()
 
 async function setupFloatBar() {
     removeFloatBar()
@@ -197,7 +217,6 @@ async function setupFloatBar() {
     floatEl.prepend(closeBtn)
     document.body.appendChild(floatEl)
     document.head.appendChild(styleEl)
-
 }
 
 function setupFloatBarAfterBodyReady() {
