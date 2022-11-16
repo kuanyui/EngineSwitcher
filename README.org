@@ -5,17 +5,27 @@ So you can easily keep your privacy as possible as you can.
 
 Currently supported search engines:
 
+** Private-focused
 - DuckDuckGo
 - Ecosia
 - Brave
+- Gibiru
+- MetaGer (en / de)
+- You.com
+- Gigablast
+
+** Unknown
+- Yahoo OneSearch
 - StartPage
+- Wikipedia English (Unrecommended)
+
+** Commercial
 - Bing
 - Google
 - goo
 - Yahoo! JAPAN
 - Yahoo!
 - Yandex (en / ru)
-- Wikipedia English (Unrecommended)
 
 For more information please see [[https://github.com/kuanyui/EngineSwitcher][GitHub]].
 

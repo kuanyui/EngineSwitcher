@@ -208,7 +208,9 @@ class OptionUIManager {
         el.setAttribute('data-tippy-content', `
         <b>Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
         <b>Jurisdiction</b>: ${countryCodeEmoji(engine.privacyInfo.jurisdiction)}<br/>
+        <b>Founded</b>: ${engine.privacyInfo.since}<br/>
         <b>Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
+        <b>Summary</b>: ${engine.privacyInfo.summary}<br/>
         `)
     }
     private buildTable() {

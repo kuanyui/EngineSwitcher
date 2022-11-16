@@ -2,7 +2,13 @@ export type search_engine_t =
     'duckduckgo' |
     'ecosia' |
     'brave' |
+    'gibiru' |
+    'metager-en' |
+    'metager-de' |
+    'gigablast' |
+    'you-com' |
     'startpage' |
+    'yahoo-onesearch' |
     'bing' |
     'google' |
     'yandex-en' |
@@ -12,6 +18,7 @@ export type search_engine_t =
     'yahoo-jp' |
     'enwiki'
 export type search_result_source_t =
+    '__unknown__' |
     '__own__' |
     'google' |
     'bing' |
@@ -41,6 +48,8 @@ export interface PrivacyInfo {
     jurisdiction: string
     resultsSources: search_result_source_t[]
     collectData: CollectData
+    since: number
+    summary: string
 }
 export enum CollectData {
     /** Officially claimed "yes" */
@@ -53,15 +62,16 @@ export enum CollectData {
 
 export function fmtCollectDataAsPrivate(x: CollectData): string {
     switch (x) {
-        case CollectData.Yes: return `❌ No (explicitly track you)`
+        case CollectData.Yes: return `❌ No (commercial, or explicitly track you)`
         case CollectData.No: return `☑️ Yes (at least, officially, claimed that won't track you)`
-        case CollectData.Unknown: return `❓ Suspicious (e.g. owned by ad-tech)`
+        case CollectData.Unknown: return `❓ Unknown (as far as I don't know how to judge after survey)`
     }
 }
 export function fmtResultSources(xs: search_result_source_t[]): string {
     return xs.map(x => {
         switch (x) {
             case '__own__': return 'Own Crawler'
+            case '__unknown__': return 'Unknown'
             case 'google': return 'Google'
             case 'bing': return 'Bing'
             case 'yandex': return 'Yandex'
@@ -100,6 +110,8 @@ export const ALL_ENGINES: SearchEngine[] = [
             collectData: CollectData.No,
             jurisdiction: 'US',
             resultsSources: ['__own__', 'bing'],
+            since: 2009,
+            summary: "Probably the most famous privacy search engine among software developer. Quack!",
         }
     },
     {
@@ -113,7 +125,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.No,
             jurisdiction: 'DE',
-            resultsSources: ['bing']
+            resultsSources: ['bing'],
+            since: 2009,
+            summary: "Ecosia donates at least 80% of its profits from ad revenue to a tree planting program."
         }
     },
     {
@@ -127,7 +141,105 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.No,
             jurisdiction: 'US',
-            resultsSources: ['__own__']
+            resultsSources: ['__own__'],
+            since: 2021,
+            summary: "Created by Brave Browser, use self-created crawler."
+        }
+    },
+    {
+        id: 'gibiru',
+        name: 'Gibiru',
+        hostname: 'gibiru.com',
+        queryKey: 'q',
+        queryUrl: 'https://gibiru.com/results.html?q={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/gibiru.png'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'US',
+            resultsSources: ['__unknown__'],
+            since: 2009,
+            summary: "Uncensored private search. Official site provided very few information about itself. Unknown crawler. Server seems located in US according to Flagfox Geotool."
+        }
+    },
+    {
+        id: 'metager-en',
+        name: 'MetaGer (English)',
+        hostname: 'metager.org',
+        queryKey: 'eingabe',
+        queryUrl: 'https://metager.org/meta/meta.ger3?eingabe={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/metager.svg'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'DE',
+            resultsSources: ['__unknown__'],
+            since: 1996,
+            summary: "A Germany based privacy-focused search engine, with the results from Bing. (English version)"
+        }
+    },
+    {
+        id: 'metager-de',
+        name: 'MetaGer (Deutsch)',
+        hostname: 'metager.de',
+        queryKey: 'eingabe',
+        queryUrl: 'https://metager.de/meta/meta.ger3?eingabe={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/metager.svg'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'DE',
+            resultsSources: ['bing'],
+            since: 1996,
+            summary: "A Germany based privacy-focused search engine, with the results from Bing. (Germany version)"
+        }
+    },
+    {
+        id: 'you-com',
+        name: 'You.com',
+        hostname: 'you.com',
+        queryKey: 'q',
+        queryUrl: 'https://you.com/search?q={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/you-com.webp'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'US',
+            resultsSources: ['bing'],
+            since: 2021,
+            summary: "A search engine with a balance of privacy and personalization, founded by former Salesforce employees and public beta on 2021. "
+        }
+    },
+    {
+        id: 'gigablast',
+        name: 'Gigablast',
+        hostname: 'gigablast.com',
+        queryKey: 'q',
+        queryUrl: 'https://gigablast.com/search?q={}',
+        queryNeedContentScript: false,
+        iconUrl: browser.runtime.getURL('img/engines/gigablast.svg'),
+        privacyInfo: {
+            collectData: CollectData.No,
+            jurisdiction: 'US',
+            resultsSources: ['__own__'],
+            since: 2002,
+            summary: "Open-source, use independent engine and web-crawler."
+        }
+    },
+    {
+        id: 'yahoo-onesearch',
+        name: 'Yahoo OneSearch',
+        hostname: 'www.onesearch.com',
+        queryKey: 'p',
+        queryUrl: 'https://www.onesearch.com/yhs/search?p={}',
+        queryNeedContentScript: true,
+        iconUrl: browser.runtime.getURL('img/engines/yahoo-onesearch.png'),
+        privacyInfo: {
+            collectData: CollectData.Unknown,
+            jurisdiction: 'IE',
+            resultsSources: ['__unknown__'],
+            since: 2020,
+            summary: "Owned by Verizon Yahoo, claim that no cookie nor tracker are used. But the information provided by its official site is quite limited. Server seems located in Ireland according to Flagfox Geotool."
         }
     },
     {
@@ -141,7 +253,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Unknown,
             jurisdiction: 'NL',
-            resultsSources: ['google']
+            resultsSources: ['google'],
+            since: 1998,
+            summary: "Since 2019, Startpage has been acquired by System1, Privacy One Group, an American ad-tech company."
         }
     },
     {
@@ -155,7 +269,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'US',
-            resultsSources: ['__own__']
+            resultsSources: ['__own__'],
+            since: 2009,
+            summary: "Created by Microsoft."
         }
     },
     {
@@ -169,7 +285,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'US',
-            resultsSources: ['__own__']
+            resultsSources: ['__own__'],
+            since: 1998,
+            summary: "Had removed 'Don't Be Evil' clause from its founding principle."
         }
     },
     {
@@ -183,7 +301,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'RU',
-            resultsSources: ['__own__']
+            resultsSources: ['__own__'],
+            since: 1997,
+            summary: "The most popular search engine across Russia and the Commonwealth of Independent States of the former Soviet Union. English UI."
         }
     },
     {
@@ -197,7 +317,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'RU',
-            resultsSources: ['__own__']
+            resultsSources: ['__own__'],
+            since: 1997,
+            summary: "The most popular search engine across Russia and the Commonwealth of Independent States of the former Soviet Union. Russian UI."
         }
     },
     {
@@ -211,7 +333,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'US',
-            resultsSources: ['bing']
+            resultsSources: ['bing'],
+            since: 1995,
+            summary: "Currently, the search results are basically provided by Bing instead of own crawler."
         }
     },
     {
@@ -225,7 +349,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'JP',
-            resultsSources: ['__own__']
+            resultsSources: ['__own__'],
+            since: 1996,
+            summary: "Owned by SoftBank since 2018. Crawler engine is Yahoo Search Technology (YST), developed by Yahoo!"
         }
     },
     {
@@ -239,7 +365,9 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'JP',
-            resultsSources: ['__own__']
+            resultsSources: ['__own__'],
+            since: 1999,
+            summary: "Owned by NTT, crawler engine technology is powered by Google, but crawl primarily Japanese websites."
         }
     },
     {
@@ -253,8 +381,10 @@ export const ALL_ENGINES: SearchEngine[] = [
         privacyInfo: {
             collectData: CollectData.Yes,
             jurisdiction: 'US',
-            resultsSources: ['__own__']
-        }
+            resultsSources: ['__own__'],
+            since: 2001,
+            summary: "Not a general-purposed search engine though, but a user want this feature and send a PR."
+        },
     },
 ]
 
@@ -338,9 +468,9 @@ class StorageManager {
         if (!enabledEngines.includes("yandex-ru")) {
             enabledEngines.push("yandex-en")
         }
-        if (!enabledEngines.includes("yahoo-jp")) {
-            enabledEngines.push("yahoo-us")
-        }
+        // if (!enabledEngines.includes("yahoo-jp")) {
+        //     enabledEngines.push("yahoo-us")
+        // }
         enabledEngines = enabledEngines.concat(["bing", "google"])
         return {
             apiLevel: 1,

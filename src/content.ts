@@ -15,6 +15,7 @@ function smartGetQueryString (): string {
     if (!engine) { return 'ERROR: Not supported search engine' }
     switch (engine.id) {
         case 'startpage': return startpageGetQueryString(engine)
+        case 'yahoo-onesearch': return yahooOneSearchGetQueryString(engine)
         default: return parseUrlToGetQuery(engine, document.location.href)
     }
 }
@@ -23,6 +24,11 @@ function startpageGetQueryString(engine: SearchEngine): string {
     // Startspage frequently suspect you are abusing them via bot.
     // So when #q is not found on DOM, still try to get keyword from URL
     const el = document.querySelector("#q") as HTMLInputElement
+    if (!el) { return parseUrlToGetQuery(engine, document.location.href) || "ERROR: StartPage has changed its HTML structure, please open an issue on EngineSwitcher's Github" }
+    return el.value
+}
+function yahooOneSearchGetQueryString(engine: SearchEngine): string {
+    const el = document.querySelector("#yschsp") as HTMLInputElement
     if (!el) { return parseUrlToGetQuery(engine, document.location.href) || "ERROR: StartPage has changed its HTML structure, please open an issue on EngineSwitcher's Github" }
     return el.value
 }

@@ -28,6 +28,12 @@
                 "*://*.startpage.com/*",
                 "*://duckduckgo.com/*",
                 "*://*.ecosia.org/*",
+                "*://gibiru.com/*",
+                "*://metager.org/*",
+                "*://metager.de/*",
+                "*://gigablast.com/*",
+                "*://you.com/*",
+                "*://www.onesearch.com/*",
                 "*://*.bing.com/*",
                 "*://search.brave.com/*",
                 "*://yandex.ru/*",
@@ -42,7 +48,11 @@
         }
     ],
     "permissions": [ "tabs", "storage" ],
-    "web_accessible_resources": ["img/engines/*.svg"],
+    "web_accessible_resources": [
+        "img/engines/*.svg",
+        "img/engines/*.png",
+        "img/engines/*.webp"
+    ],
     "commands": {
         "_execute_page_action": {
             "suggested_key": {
