@@ -197,6 +197,7 @@ async function setupFloatBar() {
     }
     #engineSwitcherBar a .iconImg {
         width: ${ICON_SIZE}px;
+        min-width: ${ICON_SIZE}px;
     }
     #engineSwitcherBar a.active {
         background: var(--bgActive);
