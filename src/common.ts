@@ -67,6 +67,24 @@ export function fmtCollectDataAsPrivate(x: CollectData): string {
         case CollectData.Unknown: return `❓ Unknown (as far as I don't know how to judge after survey)`
     }
 }
+
+export function fmtEngineTooltipHtml(engine: SearchEngine, type: 'options_ui' | 'content'): string {
+    switch (type) {
+        case 'options_ui': return `
+        <b>Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
+        <b>Jurisdiction</b>: ${engine.privacyInfo.jurisdiction}<br/>
+        <b>Founded</b>: ${engine.privacyInfo.since}<br/>
+        <b>Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
+        <b>Summary</b>: ${engine.privacyInfo.summary}<br/>
+        `
+        case 'content': return `
+        <b>Name</b>: ${engine.name}<br/>
+        <b>Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
+        <b>Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
+        <b>Summary</b>: ${engine.privacyInfo.summary}<br/>
+        `
+    }
+}
 export function fmtResultSources(xs: search_result_source_t[]): string {
     return xs.map(x => {
         switch (x) {
@@ -108,7 +126,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/duckduckgo.svg'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__', 'bing'],
             since: 2009,
             summary: "Probably the most famous privacy search engine among software developer. Quack!",
@@ -124,7 +142,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/ecosia.svg'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'DE',
+            jurisdiction: '🇩🇪 Germany',
             resultsSources: ['bing'],
             since: 2009,
             summary: "Ecosia donates at least 80% of its profits from ad revenue to a tree planting program."
@@ -140,7 +158,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/brave.svg'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 2021,
             summary: "Created by Brave Browser, use self-created crawler."
@@ -156,7 +174,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/gibiru.png'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['__unknown__'],
             since: 2009,
             summary: "Uncensored private search. Official site provided very few information about itself. Unknown crawler. Server seems located in US according to Flagfox Geotool."
@@ -172,7 +190,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/metager.svg'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'DE',
+            jurisdiction: '🇩🇪 Germany',
             resultsSources: ['__unknown__'],
             since: 1996,
             summary: "A Germany based privacy-focused search engine, with the results from Bing. (English version)"
@@ -188,7 +206,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/metager.svg'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'DE',
+            jurisdiction: '🇩🇪 Germany',
             resultsSources: ['bing'],
             since: 1996,
             summary: "A Germany based privacy-focused search engine, with the results from Bing. (Germany version)"
@@ -204,7 +222,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/you-com.webp'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['bing'],
             since: 2021,
             summary: "A search engine with a balance of privacy and personalization, founded by former Salesforce employees and public beta on 2021. "
@@ -220,7 +238,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/gigablast.svg'),
         privacyInfo: {
             collectData: CollectData.No,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 2002,
             summary: "Open-source, use independent engine and web-crawler."
@@ -236,7 +254,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/yahoo-onesearch.png'),
         privacyInfo: {
             collectData: CollectData.Unknown,
-            jurisdiction: 'IE',
+            jurisdiction: '🇮🇪 Ireland',
             resultsSources: ['__unknown__'],
             since: 2020,
             summary: "Owned by Verizon Yahoo!, claims that no cookie nor tracker are used. But the information provided by its official site is quite limited. Server seems located in Ireland according to Flagfox Geotool. <b>NOTICE THAT this OneSearch uses some unknown magic, which force all links opened with new tab, I don't know how to eliminate this effect currently; therefore, not recommended to use.</b>"
@@ -252,7 +270,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/startpage.svg'),
         privacyInfo: {
             collectData: CollectData.Unknown,
-            jurisdiction: 'NL',
+            jurisdiction: '🇳🇱 Netherlands',
             resultsSources: ['google'],
             since: 1998,
             summary: "Since 2019, Startpage has been acquired by System1, Privacy One Group, an American ad-tech company."
@@ -268,7 +286,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/bing.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 2009,
             summary: "Created by Microsoft."
@@ -284,7 +302,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/google.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 1998,
             summary: "Had removed 'Don't Be Evil' clause from its founding principle."
@@ -300,7 +318,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/yandex-en.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'RU',
+            jurisdiction: '🇷🇺 Russia',
             resultsSources: ['__own__'],
             since: 1997,
             summary: "The most popular search engine across Russia and the Commonwealth of Independent States of the former Soviet Union. English UI."
@@ -316,7 +334,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/yandex-ru.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'RU',
+            jurisdiction: '🇷🇺 Russia',
             resultsSources: ['__own__'],
             since: 1997,
             summary: "The most popular search engine across Russia and the Commonwealth of Independent States of the former Soviet Union. Russian UI."
@@ -332,7 +350,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/yahoo-us.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['bing'],
             since: 1995,
             summary: "Currently, the search results are basically provided by Bing instead of own crawler."
@@ -348,7 +366,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/yahoo-jp.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'JP',
+            jurisdiction: '🇯🇵 Japan',
             resultsSources: ['__own__'],
             since: 1996,
             summary: "Owned by SoftBank since 2018. Crawler engine is Yahoo Search Technology (YST), developed by Yahoo!"
@@ -364,7 +382,7 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/goo.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'JP',
+            jurisdiction: '🇯🇵 Japan',
             resultsSources: ['__own__'],
             since: 1999,
             summary: "Owned by NTT, crawler engine technology is powered by Google, but crawl primarily Japanese websites."
@@ -380,32 +398,13 @@ export const ALL_ENGINES: SearchEngine[] = [
         iconUrl: browser.runtime.getURL('img/engines/wikipedia.svg'),
         privacyInfo: {
             collectData: CollectData.Yes,
-            jurisdiction: 'US',
+            jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 2001,
             summary: "Not a general-purposed search engine though, but a user want this feature and send a PR."
         },
     },
 ]
-
-
-export function countryCodeEmoji(cc: string) {
-    // country code regex
-    const CC_REGEX = /^[a-z]{2}$/i;
-    // offset between uppercase ascii and regional indicator symbols
-    const OFFSET = 127397;
-    if (!CC_REGEX.test(cc)) {
-      const type = typeof cc;
-      throw new TypeError(
-        `cc argument must be an ISO 3166-1 alpha-2 string, but got '${
-          type === 'string' ? cc : type
-        }' instead.`,
-      );
-    }
-
-    const codePoints = [...cc.toUpperCase()].map(c => c.codePointAt(0)! + OFFSET);
-    return String.fromCodePoint(...codePoints);
-  }
 
 
 export function getEngineById(engineId: search_engine_t): SearchEngine {

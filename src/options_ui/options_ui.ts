@@ -12,7 +12,7 @@
  * remedy known factual inaccuracies. (Cited from MPL - 2.0, chapter 3.3)
  */
 
-import { ALL_ENGINES, countryCodeEmoji, fmtCollectDataAsPrivate, fmtResultSources, getEngineById, SearchEngine, search_engine_t, storageManager } from "../common"
+import { ALL_ENGINES, fmtCollectDataAsPrivate, fmtEngineTooltipHtml, fmtResultSources, getEngineById, SearchEngine, search_engine_t, storageManager } from "../common"
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 
@@ -205,13 +205,7 @@ class OptionUIManager {
         this.emitChanges()
     }
     private setupEngineTooltip(el: Element, engine: SearchEngine): void {
-        el.setAttribute('data-tippy-content', `
-        <b>Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
-        <b>Jurisdiction</b>: ${countryCodeEmoji(engine.privacyInfo.jurisdiction)}<br/>
-        <b>Founded</b>: ${engine.privacyInfo.since}<br/>
-        <b>Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
-        <b>Summary</b>: ${engine.privacyInfo.summary}<br/>
-        `)
+        el.setAttribute('data-tippy-content', fmtEngineTooltipHtml(engine, 'options_ui'))
     }
     private buildTable() {
         console.log('buildTable()')

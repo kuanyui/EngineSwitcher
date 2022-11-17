@@ -1,4 +1,6 @@
-import { TypedMsg, isUrlSupported, getEngineObjOfUrl, search_engine_t, SearchEngine, parseUrlToGetQuery, storageManager } from "./common";
+import tippy from "tippy.js";
+import { TypedMsg, isUrlSupported, getEngineObjOfUrl, search_engine_t, SearchEngine, parseUrlToGetQuery, storageManager, fmtEngineTooltipHtml } from "./common";
+import 'tippy.js/dist/tippy.css'
 
 browser.runtime.onMessage.addListener((_ev: any) => {
     const ev = _ev as TypedMsg
@@ -101,14 +103,22 @@ function ecosiaRemoveStupidAnnoyingNotificationBanner() {
     */
 }
 
-function genIconHtml(engine: SearchEngine, query: string): string {
+function createEngineLinkElem(engine: SearchEngine, query: string): HTMLAnchorElement {
     const kls = engine.hostname === location.hostname ? 'active' : ''
     const href = engine.queryUrl.replace(/{}/, encodeURI(query))
-    return `
-    <a href="${href}" class="${kls}" target="_self">
-        <img class="iconImg" src="${engine.iconUrl}">
-    </a>
-    `
+    const aEl = document.createElement('a')
+    aEl.href = href
+    aEl.className = kls
+    aEl.target = "_self"
+    const imgEl = document.createElement('img')
+    imgEl.className = "iconImg"
+    imgEl.src = engine.iconUrl
+    aEl.appendChild(imgEl)
+    tippy(aEl, {
+        allowHTML: true,
+        content: fmtEngineTooltipHtml(engine, 'content')
+    })
+    return aEl
 }
 
 async function getEnabledEngines(): Promise<SearchEngine[]> {
@@ -210,10 +220,11 @@ async function setupFloatBar() {
     closeBtn.className = 'closeBtn'
     closeBtn.onclick = function () { removeFloatBar() }
 
-    floatEl.innerHTML = `<div class="scrollArea">
-    ${enabledEngines.map(eng => genIconHtml(eng, query)).join('')}
-    </div>
-    `
+    floatEl.innerHTML = `<div class="scrollArea"></div>`
+    const scrollAreaEl = floatEl.querySelector('.scrollArea')!
+    for (const eng of enabledEngines) {
+        scrollAreaEl.appendChild(createEngineLinkElem(eng, query))
+    }
     floatEl.prepend(closeBtn)
     document.body.appendChild(floatEl)
     document.head.appendChild(styleEl)
