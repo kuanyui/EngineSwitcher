@@ -44,7 +44,8 @@
                 "*://search.goo.ne.jp/*",
                 "*://en.wikipedia.org/*"
             ],
-            "js": ["dist/content.js"]
+            "js": ["dist/content.js"],
+            "css": ["dist/content_tippy.css"]
         }
     ],
     "permissions": [ "tabs", "storage" ],

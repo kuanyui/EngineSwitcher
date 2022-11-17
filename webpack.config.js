@@ -55,6 +55,7 @@ const config = {
             // { from: 'img/', to: 'img/', force: true, toType: 'dir' },
             // { from: 'manifest.json', to: 'manifest.json', force: true, toType: 'file' },
           { from: 'src/options_ui/style/', to: 'options_ui_style/', force: true, toType: 'dir' },
+          { from: 'node_modules/tippy.js/dist/tippy.css', to: 'content_tippy.css', force: true, toType: 'file' }
         ]),
     ]
 }

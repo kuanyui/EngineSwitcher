@@ -1,6 +1,5 @@
 import tippy from "tippy.js";
 import { TypedMsg, isUrlSupported, getEngineObjOfUrl, search_engine_t, SearchEngine, parseUrlToGetQuery, storageManager, fmtEngineTooltipHtml } from "./common";
-import 'tippy.js/dist/tippy.css'
 
 browser.runtime.onMessage.addListener((_ev: any) => {
     const ev = _ev as TypedMsg
