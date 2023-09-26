@@ -68,6 +68,8 @@ function ecosiaRemoveStupidAnnoyingNotificationBanner() {
             styleEl.innerText = `
               .main-header .banner { display: none !important; }
               .js-notifications-banner { display: none !important; }
+              .banner.cookie-notice { display: none !important; }
+              .modal.privacy-modal { display: none !important; }
             `
             styleEl.className='engineSwitcherEcosiaHack'
             document.body.append(styleEl)
