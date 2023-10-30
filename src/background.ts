@@ -78,7 +78,7 @@ async function goToNextEngine (tab: browser.tabs.Tab) {
     const state = await getCurrentState(tab.id, tab.url)
     if (!state) {return}
     browser.tabs.update(tab.id, {
-        url: state.nextEngine.queryUrl.replace(/{}/, encodeURI(state.keyword))
+        url: state.nextEngine.queryUrl.replace(/{}/, encodeURIComponent(state.keyword))
     })
 }
 
