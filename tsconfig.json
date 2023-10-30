@@ -14,7 +14,6 @@
   },
   "compilerOptions": {
     "typeRoots": ["node_modules/@types", "node_modules/web-ext-types"],  // Useless for .vue
-    "types": ["web-ext-types"],   // Useless for .vue
     "target": "esnext",
     "lib": [
       "esnext",
