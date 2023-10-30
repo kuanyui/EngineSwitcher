@@ -5,7 +5,6 @@ export type search_engine_t =
     'gibiru' |
     'metager-en' |
     'metager-de' |
-    'gigablast' |
     'you-com' |
     'startpage' |
     'yahoo-onesearch' |
@@ -23,6 +22,7 @@ export type search_result_source_t =
     'google' |
     'bing' |
     'yandex'
+const DEPRECATED_SEARCH_ENGINES = ['gigablast']
 export interface SearchEngine {
     /** duckduckgo */
     id: search_engine_t,
@@ -226,22 +226,6 @@ export const ALL_ENGINES: SearchEngine[] = [
             resultsSources: ['bing'],
             since: 2021,
             summary: "A search engine with a balance of privacy and personalization, founded by former Salesforce employees and public beta on 2021. "
-        }
-    },
-    {
-        id: 'gigablast',
-        name: 'Gigablast',
-        hostname: 'gigablast.com',
-        queryKey: 'q',
-        queryUrl: 'https://gigablast.com/search?q={}',
-        queryNeedContentScript: false,
-        iconUrl: browser.runtime.getURL('img/engines/gigablast.svg'),
-        privacyInfo: {
-            collectData: CollectData.No,
-            jurisdiction: '🇺🇸 United States',
-            resultsSources: ['__own__'],
-            since: 2002,
-            summary: "Open-source, use independent engine and web-crawler."
         }
     },
     {
@@ -460,9 +444,9 @@ class StorageManager {
     getDefaultData(): MyStorage {
         let enabledEngines: search_engine_t[] = ["duckduckgo", "ecosia", "brave"]
         if (navigator.languages.includes('ja-JP') || navigator.languages.includes('zh-TW')) {
-            enabledEngines = enabledEngines.concat(["goo", "yahoo-jp"])
+            enabledEngines.push("goo", "yahoo-jp")
         } else if (navigator.languages.some(x=>x.startsWith('ru-'))) {
-            enabledEngines = enabledEngines.concat(["yandex-ru"])
+            enabledEngines.push("yandex-ru")
         }
         if (!enabledEngines.includes("yandex-ru")) {
             enabledEngines.push("yandex-en")
@@ -470,7 +454,7 @@ class StorageManager {
         // if (!enabledEngines.includes("yahoo-jp")) {
         //     enabledEngines.push("yahoo-us")
         // }
-        enabledEngines = enabledEngines.concat(["bing", "google"])
+        enabledEngines.push("bing", "google")
         return {
             apiLevel: 1,
             enabledEngines: enabledEngines,
@@ -504,6 +488,7 @@ class StorageManager {
                 storageManager.setData(defaultValue)
                 return defaultValue
             }
+            d.enabledEngines = d.enabledEngines.filter(x => !DEPRECATED_SEARCH_ENGINES.includes(x))
             return Object.assign(defaultValue, d)
         }).catch((err) => {
             console.error('Error when getting settings from browser.storage:', err)

@@ -12,7 +12,6 @@ Currently supported search engines:
 - Gibiru
 - MetaGer (en / de)
 - You.com
-- Gigablast
 
 ** Unknown
 - Yahoo OneSearch
