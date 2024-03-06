@@ -207,6 +207,16 @@ async function setupFloatBar() {
     body {
         padding-bottom: ${ICON_SIZE}px;
     }
+
+    @media(prefers-color-scheme: dark) {
+        #engineSwitcherBar {
+            --bg: #000;
+            border: none;
+        }
+        #engineSwitcherBar img[src$='wikipedia.svg']:not(:hover) {
+            filter: invert(100%);
+        }
+    }
     `
     const floatEl = document.createElement('div')
     floatEl.id = 'engineSwitcherBar'
