@@ -172,7 +172,7 @@ async function setupFloatBar() {
         position: fixed;
         z-index: 99999999999;
         bottom: 0;
-        left: 0;
+        right: 0;
         background: var(--bg);
         border: 1px solid var(--bd);
     }
