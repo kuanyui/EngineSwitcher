@@ -374,18 +374,18 @@ export const ALL_ENGINES: SearchEngine[] = [
     },
     {
         id: 'enwiki',
-        name: 'English Wikipedia (Not recommended)',
+        name: '🧪 Wikipedia (English)',
         hostname: 'en.wikipedia.org',
         queryKey: 'search',
         queryUrl: 'https://en.wikipedia.org/w/index.php?search={}&title=Special:Search&fulltext=1&ns0=1',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/wikipedia.svg'),
         privacyInfo: {
-            collectData: CollectData.Yes,
+            collectData: CollectData.No,  // https://foundation.wikimedia.org/wiki/Policy:Wikipedia_15_Privacy_Policy "Generally, we keep personal, nonpublic information about you confidential. We do not sell or rent your nonpublic information, nor do we give it to others to sell you anything. However, there are a few specific circumstances where we are permitted to share your information.""
             jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 2001,
-            summary: "Not a general-purposed search engine though, but a user want this feature and send a PR."
+            summary: "(🧪 Experimental) Everyone knows what this is, but not recommended to use here because this is not a general-purposed search engine and may be not practical, but a user want this feature and sent a PR."
         },
     },
 ]
