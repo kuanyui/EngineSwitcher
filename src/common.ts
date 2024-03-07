@@ -374,18 +374,18 @@ export const ALL_ENGINES: SearchEngine[] = [
     },
     {
         id: 'enwiki',
-        name: 'English Wikipedia (Not recommended)',
+        name: 'English Wikipedia',
         hostname: 'en.wikipedia.org',
         queryKey: 'search',
         queryUrl: 'https://en.wikipedia.org/w/index.php?search={}&title=Special:Search&fulltext=1&ns0=1',
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/wikipedia.svg'),
         privacyInfo: {
-            collectData: CollectData.Yes,
+            collectData: CollectData.No,
             jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 2001,
-            summary: "Not a general-purposed search engine though, but a user want this feature and send a PR."
+            summary: "Open encyclopedia that anybody can edit"
         },
     },
 ]
