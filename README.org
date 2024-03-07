@@ -54,7 +54,7 @@ npm i
 
 ** Run for development (Watch)
 #+BEGIN_SRC sh
-make dev
+make watch
 web-ext run --verbose --firefox-profile ~/.mozilla/firefox/PROFILE_DIR_NAME
 #+END_SRC
 #+BEGIN_QUOTE
