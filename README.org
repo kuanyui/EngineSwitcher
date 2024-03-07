@@ -1,4 +1,6 @@
 * Engine Switcher
+[[img/icon.png]]
+
 A WebExtension to switch current page between various search engines in just one click (or =Ctrl+Alt+N=), if you are too lazy to type =!b=, =!g= (especially on mobile) in DuckDuckGo.
 
 So you can easily keep your privacy as possible as you can.
