@@ -211,7 +211,7 @@ async function setupFloatBar() {
     @media(prefers-color-scheme: dark) {
         #engineSwitcherBar {
             --bg: #000;
-            border-color: #111;
+            border-color: #333;
         }
         #engineSwitcherBar img[src$='wikipedia.svg']:not(:hover) {
             filter: invert(100%);
