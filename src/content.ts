@@ -217,7 +217,8 @@ async function setupFloatBar() {
             filter: invert(100%);
         }
         #engineSwitcherBar a.active {
-            display: none;
+            background: #222;
+            border-bottom: 3px solid #999;
         }
     }
     `
