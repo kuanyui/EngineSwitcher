@@ -42,7 +42,7 @@ For more information please see [[https://github.com/kuanyui/EngineSwitcher][Git
 
 * Requirements for Development
 - Node
-- web-ext
+- [[https://github.com/mozilla/web-ext][web-ext]]
 - GNU Make
 - Python 3 (For HTTP server)
 
