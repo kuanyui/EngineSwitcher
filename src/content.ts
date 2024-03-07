@@ -166,6 +166,8 @@ async function setupFloatBar() {
     #engineSwitcherBar {
         --bg: #ffffff;
         --bgActive: #eeeeee;
+        --bgHover: #eeeeee;
+        --activeIndicator: #5599ff;
         --fg: #333333;
         --bd: #cccccc;
         display: flex;
@@ -196,6 +198,9 @@ async function setupFloatBar() {
     #engineSwitcherBar a:hover {
         background: var(--bgActive);
     }
+    #engineSwitcherBar .active {
+        border-bottom: 3px solid var(--activeIndicator);
+    }
     #engineSwitcherBar a .iconImg {
         width: ${ICON_SIZE}px;
         min-width: ${ICON_SIZE}px;
@@ -211,14 +216,15 @@ async function setupFloatBar() {
     @media(prefers-color-scheme: dark) {
         #engineSwitcherBar {
             --bg: #000;
-            border-color: #333;
+            --bgActive: #333333;
+            --bgHover: #eeeeee;
+            --activeIndicator: #999999;
+            --fg: #666666;
+            --bd: #666666;
         }
-        #engineSwitcherBar img[src$='wikipedia.svg']:not(:hover) {
+        #engineSwitcherBar img[src$='wikipedia.svg'],
+        #engineSwitcherBar a.closeBtn svg {
             filter: invert(100%);
-        }
-        #engineSwitcherBar a.active {
-            background: #222;
-            border-bottom: 3px solid #999;
         }
     }
     `
