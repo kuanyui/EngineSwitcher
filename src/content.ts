@@ -106,7 +106,9 @@ function ecosiaRemoveStupidAnnoyingNotificationBanner() {
 
 function createEngineLinkElem(engine: SearchEngine, query: string): HTMLAnchorElement {
     const kls = engine.hostname === location.hostname ? 'active' : ''
-    const href = engine.queryUrl.replace(/{}/, encodeURIComponent(query))
+    const href = query ?
+        engine.queryUrl.replace(/{}/, encodeURIComponent(query)) :
+        `https://${engine.hostname}`
     const aEl = document.createElement('a')
     aEl.href = href
     aEl.className = kls
