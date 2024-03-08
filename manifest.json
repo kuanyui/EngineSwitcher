@@ -41,7 +41,7 @@
                 "*://search.yahoo.com/*",
                 "*://search.yahoo.co.jp/*",
                 "*://search.goo.ne.jp/*",
-                "*://en.wikipedia.org/*"
+                "https://en.wikipedia.org/w/index.php?search=*"
             ],
             "js": ["dist/content.js"],
             "css": ["dist/content_tippy.css"]
