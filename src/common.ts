@@ -62,9 +62,9 @@ export enum CollectData {
 
 export function fmtCollectDataAsPrivate(x: CollectData): string {
     switch (x) {
-        case CollectData.Yes: return `❌ No (commercial, or explicitly track you)`
+        case CollectData.Yes: return `❌ No (commercial, or explicitly track you, or collect personal data)`
         case CollectData.No: return `☑️ Yes (at least, officially, claimed that won't track you)`
-        case CollectData.Unknown: return `❓ Unknown (as far as I don't know how to judge after survey)`
+        case CollectData.Unknown: return `❓ Unknown (at least I don't know how to judge after surveying)`
     }
 }
 
@@ -89,7 +89,7 @@ export function fmtResultSources(xs: search_result_source_t[]): string {
     return xs.map(x => {
         switch (x) {
             case '__own__': return 'Own Crawler'
-            case '__unknown__': return 'Unknown'
+            case '__unknown__': return 'Unknown, or not disclosed'
             case 'google': return 'Google'
             case 'bing': return 'Bing'
             case 'yandex': return 'Yandex'
@@ -193,7 +193,7 @@ export const ALL_ENGINES: SearchEngine[] = [
             jurisdiction: '🇩🇪 Germany',
             resultsSources: ['__unknown__'],
             since: 1996,
-            summary: "A Germany based privacy-focused search engine, with the results from Bing. (English version)"
+            summary: "A Germany based privacy-focused search engine, with the results from Bing. (English UI)"
         }
     },
     {
@@ -209,7 +209,7 @@ export const ALL_ENGINES: SearchEngine[] = [
             jurisdiction: '🇩🇪 Germany',
             resultsSources: ['bing'],
             since: 1996,
-            summary: "A Germany based privacy-focused search engine, with the results from Bing. (Germany version)"
+            summary: "A Germany based privacy-focused search engine, with the results from Bing. (Germany UI)"
         }
     },
     {
@@ -257,7 +257,13 @@ export const ALL_ENGINES: SearchEngine[] = [
             jurisdiction: '🇳🇱 Netherlands',
             resultsSources: ['google'],
             since: 1998,
-            summary: "Since 2019, Startpage has been acquired by System1, Privacy One Group, an American ad-tech company."
+            summary: `StartPage has ever been choosed as the default search engine in some Linux distributions (glory times...). But:
+                <ol>
+                <li>Since 2019, Startpage has been acquired by System1, Privacy One Group, an American ad-tech company.</li>
+                <li>Nearly unavailable because it frequently block my connection with a fucking "human verification" when switching engine.</li>
+                </ol>
+                So this is not enabled nor recommended by default in EngineSwitch anymore.
+                `
         }
     },
     {
@@ -305,7 +311,7 @@ export const ALL_ENGINES: SearchEngine[] = [
             jurisdiction: '🇷🇺 Russia',
             resultsSources: ['__own__'],
             since: 1997,
-            summary: "The most popular search engine across Russia and the Commonwealth of Independent States of the former Soviet Union. English UI."
+            summary: "The most popular search engine across Russia and the countries among Commonwealth of Independent States / Soviet Union. (English UI)"
         }
     },
     {
@@ -321,7 +327,7 @@ export const ALL_ENGINES: SearchEngine[] = [
             jurisdiction: '🇷🇺 Russia',
             resultsSources: ['__own__'],
             since: 1997,
-            summary: "The most popular search engine across Russia and the Commonwealth of Independent States of the former Soviet Union. Russian UI."
+            summary: "The most popular search engine across Russia and the countries among Commonwealth of Independent States / Soviet Union. (Russian UI)"
         }
     },
     {
@@ -381,11 +387,12 @@ export const ALL_ENGINES: SearchEngine[] = [
         queryNeedContentScript: false,
         iconUrl: browser.runtime.getURL('img/engines/wikipedia.svg'),
         privacyInfo: {
-            collectData: CollectData.No,  // https://foundation.wikimedia.org/wiki/Policy:Wikipedia_15_Privacy_Policy "Generally, we keep personal, nonpublic information about you confidential. We do not sell or rent your nonpublic information, nor do we give it to others to sell you anything. However, there are a few specific circumstances where we are permitted to share your information.""
+            collectData: CollectData.Unknown, // https://foundation.wikimedia.org/wiki/Policy:Wikipedia_15_Privacy_Policy "We actively collect some types of information with a variety of commonly-used technologies. These generally include tracking pixels, JavaScript"
             jurisdiction: '🇺🇸 United States',
             resultsSources: ['__own__'],
             since: 2001,
-            summary: "(🧪 Experimental) Everyone knows what this is, but not recommended to use here because this is not a general-purposed search engine and may be not practical, but a user want this feature and sent a PR."
+            summary: `(🧪 Experimental) Everyone knows what this is, but not recommended to use here because this is not a general-purposed search engine and may be not very useful, but a user want this feature and sent a PR.</br>
+            <p>According to its privacy policy, it claims it's a non-profit organization and don't sell personal info, <b>but still tracks you with tracking pixel and JavaScript.</p>`
         },
     },
 ]
