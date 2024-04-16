@@ -225,6 +225,7 @@ async function setupFloatBar() {
             --bd: #666666;
         }
         #engineSwitcherBar img[src$='wikipedia.svg'],
+        #engineSwitcherBar img[src$='yahoo-onesearch.png'],
         #engineSwitcherBar a.closeBtn svg {
             filter: invert(100%);
         }
