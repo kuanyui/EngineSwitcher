@@ -4,9 +4,7 @@
   "description": "Switch search engine in one click",
   "main": "dist/index.js",
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "tippy.js": "^6.3.7",
-    "vue": "^2.6.10"
+    "tippy.js": "^6.3.7"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.2",
