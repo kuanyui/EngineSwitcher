@@ -181,7 +181,7 @@ async function setupFloatBar() {
         border: 1px solid var(--bd);
     }
     #engineSwitcherBar .scrollArea {
-        max-width: calc(100vw - 36px);
+        max-width: calc(100vw - 48px); /* exclude the width of .closeBtn */
         overflow-x: scroll;
         display: flex;
         width: 100%;
@@ -195,7 +195,8 @@ async function setupFloatBar() {
         padding: 2px 10px;
     }
     #engineSwitcherBar a.closeBtn {
-        width: 36px;
+        width: 48px;
+        padding: 0;
     }
     #engineSwitcherBar a:hover {
         background: var(--bgActive);
