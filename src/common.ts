@@ -71,17 +71,17 @@ export function fmtCollectDataAsPrivate(x: CollectData): string {
 export function fmtEngineTooltipHtml(engine: SearchEngine, type: 'options_ui' | 'content'): string {
     switch (type) {
         case 'options_ui': return `
-        <b>Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
-        <b>Jurisdiction</b>: ${engine.privacyInfo.jurisdiction}<br/>
-        <b>Founded</b>: ${engine.privacyInfo.since}<br/>
-        <b>Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
-        <b>Summary</b>: ${engine.privacyInfo.summary}<br/>
+        <b style="opacity: 0.6;">Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
+        <b style="opacity: 0.6;">Jurisdiction</b>: ${engine.privacyInfo.jurisdiction}<br/>
+        <b style="opacity: 0.6;">Founded</b>: ${engine.privacyInfo.since}<br/>
+        <b style="opacity: 0.6;">Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
+        <b style="opacity: 0.6;">Summary</b>: ${engine.privacyInfo.summary}<br/>
         `
         case 'content': return `
-        <b>Name</b>: ${engine.name}<br/>
-        <b>Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
-        <b>Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
-        <b>Summary</b>: ${engine.privacyInfo.summary}<br/>
+        <b style="opacity: 0.6;">Name</b>: ${engine.name}<br/>
+        <b style="opacity: 0.6;">Private</b>: ${fmtCollectDataAsPrivate(engine.privacyInfo.collectData)}<br/>
+        <b style="opacity: 0.6;">Result Sources</b>: ${fmtResultSources(engine.privacyInfo.resultsSources)}<br/>
+        <b style="opacity: 0.6;">Summary</b>: ${engine.privacyInfo.summary}<br/>
         `
     }
 }
